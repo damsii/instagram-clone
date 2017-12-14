@@ -97,7 +97,7 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <Button
+                <TextView
                     android:id="@+id/email_sign_in_button"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
@@ -105,8 +105,9 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
-                    android:background="#ff00000"
                     android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
                     android:text="Register"
                     android:textAllCaps="false"
                     android:textColor="#2f4f4f"
