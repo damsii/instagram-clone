@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.progress_view);
-        mRegisterView = findViewById(R.id.tv_register);
+        mRegisterView = findViewById(R.id.register);
         mRegisterView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
