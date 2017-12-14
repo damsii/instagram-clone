@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/nyc"
+    android:background="@drawable/sf"
     android:orientation="vertical"
     tools:context="com.iamdamjanmiloshevski.instagramclone.activity.LoginActivity">
 
@@ -33,8 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/login_progress"
-            android:text="Signing in..."
-            android:textColor="@color/colorAccent"
+            android:text="Registering..."
+            android:textColor="#fff"
             android:textSize="14sp" />
     </RelativeLayout>
 
@@ -46,7 +46,7 @@
         android:gravity="center">
 
         <ScrollView
-            android:id="@+id/login_form"
+            android:id="@+id/register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <AutoCompleteTextView
+                    <EditText
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -71,7 +71,8 @@
                         android:hint="@string/prompt_email"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:textColorHint="#fff" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -87,12 +88,12 @@
                         android:layout_marginStart="10dp"
                         android:hint="@string/prompt_password"
                         android:imeActionId="6"
-                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeActionLabel="@string/action_register_short"
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:textColorHint="@color/colorPrimaryDark" />
+                        android:textColorHint="#fff" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -105,7 +106,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="@string/action_sign_in"
+                    android:text="Register"
                     android:textAllCaps="false"
                     android:textStyle="bold" />
 
@@ -119,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Don't have an account? Sign in "
+                        android:text="Already have an account? Sign in "
                         android:textColor="#fff" />
 
                     <TextView
@@ -129,6 +130,7 @@
                         android:text="here"
                         android:textColor="#000080" />
                 </RelativeLayout>
+
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

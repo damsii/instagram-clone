@@ -11,10 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,47 +19,37 @@ import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
 import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
-import com.parse.FindCallback;
-import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * A login screen that offers login via email/password.
- */
-public class LoginActivity extends AppCompatActivity {
-    private final String TAG = LoginActivity.class.getSimpleName();
+public class SignUpActivity extends AppCompatActivity {
+    private final String TAG = SignUpActivity.class.getSimpleName();
+
     private ArrayList<String> usernames = new ArrayList<>();
 
     // UI references.
-    private AutoCompleteTextView mUsername;
+    private EditText mUsername;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private View mRegisterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
         getSupportActionBar().hide();
         // Set up the login form.
-        Toast.makeText(LoginActivity.this, "Please login to continue", Toast.LENGTH_SHORT)
-                .show();
         mUsername = findViewById(R.id.email);
-        populateAutoComplete();
 
         mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptRegistration();
                     return true;
                 }
                 return false;
@@ -70,52 +57,23 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.progress_view);
-        mRegisterView = findViewById(R.id.tv_register);
-        mRegisterView.setOnClickListener(new OnClickListener() {
+        mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent gotoRegister = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(gotoRegister);
+                attemptRegistration();
             }
         });
+
+        mLoginFormView = findViewById(R.id.register_form);
+        mProgressView = findViewById(R.id.progress_view);
     }
-
-    private void populateAutoComplete() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null) {
-                    if (objects.size() > 0) {
-                        for (ParseObject object : objects) {
-                            usernames.add(object.getString("username"));
-                        }
-                    }
-                }
-            }
-        });
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, usernames);
-        mUsername.setAdapter(adapter);
-
-    }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptRegistration() {
 //        if (mAuthTask != null) {
 //            return;
 //        }
@@ -160,18 +118,22 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            ParseUser.logInInBackground(email, password, new LogInCallback() {
+            ParseUser user = new ParseUser();
+            user.setUsername(email);
+            user.setPassword(password);
+            user.signUpInBackground(new SignUpCallback() {
                 @Override
-                public void done(ParseUser user, ParseException e) {
+                public void done(ParseException e) {
                     if (e == null) {
-                        Log.i(TAG, "Login successful");
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Log.i(TAG, "Registration successful");
+                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        Toast.makeText(SignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Failed to sign in. Error: " + e.getMessage(),
+                        Toast.makeText(SignUpActivity.this, "Registration failed. Error: " + e.getMessage(),
                                 Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Login failed. Error: " + e.getMessage());
+                        Log.e(TAG, "Registration failed. Error: " + e.getMessage());
                     }
                 }
             });
@@ -217,4 +179,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-
