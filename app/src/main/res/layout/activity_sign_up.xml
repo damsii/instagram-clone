@@ -105,9 +105,12 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
+                    android:background="#ff00000"
                     android:gravity="center"
                     android:text="Register"
                     android:textAllCaps="false"
+                    android:textColor="#2f4f4f"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -129,7 +132,8 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/have_acc"
                         android:text="here"
-                        android:textColor="#000080" />
+                        android:textColor="#4c4cff"
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
             </LinearLayout>
