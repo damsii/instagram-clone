@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,18 +22,15 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-import java.util.ArrayList;
-
 public class SignUpActivity extends AppCompatActivity {
     private final String TAG = SignUpActivity.class.getSimpleName();
-
-    private ArrayList<String> usernames = new ArrayList<>();
 
     // UI references.
     private EditText mUsername;
     private EditText mPasswordView;
     private View mProgressView;
-    private View mLoginFormView;
+    private View mRegisterFormView;
+    private View mLoginView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +60,17 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        mLoginFormView = findViewById(R.id.register_form);
+        mRegisterFormView = findViewById(R.id.register_form);
         mProgressView = findViewById(R.id.progress_view);
+        mLoginView = findViewById(R.id.login);
+        mLoginView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gotoLogin = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(gotoLogin);
+                finish();
+            }
+        });
     }
 
     /**
@@ -160,12 +165,12 @@ public class SignUpActivity extends AppCompatActivity {
         // the progress spinner.
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+        mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mRegisterFormView.animate().setDuration(shortAnimTime).alpha(
                 show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             }
         });
 

@@ -122,19 +122,33 @@
 
                     <TextView
                         android:id="@+id/have_acc"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Already have an account? Sign in "
+                        android:text="Already have an account?"
                         android:textColor="#fff" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/have_acc"
-                        android:text="here"
-                        android:textColor="#4c4cff"
-                        android:textStyle="bold" />
+                        android:layout_below="@id/have_acc"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/t1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sign in "
+                            android:textColor="#fff" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/t1"
+                            android:text="@string/underlined"
+                            android:textColor="#ccac00"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
                 </RelativeLayout>
 
             </LinearLayout>

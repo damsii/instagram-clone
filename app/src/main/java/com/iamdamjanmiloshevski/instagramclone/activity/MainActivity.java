@@ -1,17 +1,21 @@
 package com.iamdamjanmiloshevski.instagramclone.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.adapter.InstagramPagesAdapter;
+import com.iamdamjanmiloshevski.instagramclone.fragment.AddPictureFragment;
+import com.iamdamjanmiloshevski.instagramclone.fragment.HomeFragment;
+import com.iamdamjanmiloshevski.instagramclone.fragment.ProfileFragment;
+import com.iamdamjanmiloshevski.instagramclone.utility.Constants;
 import com.parse.ParseAnalytics;
-import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
+    private ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,27 +25,42 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
+        pager = findViewById(R.id.pages);
+        TabLayout tabs = findViewById(R.id.tabs);
+
+        setupPages(pager, tabs);
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
 
+    private void setupPages(final ViewPager pager, TabLayout tabs) {
+        InstagramPagesAdapter adapter = new InstagramPagesAdapter(getSupportFragmentManager(), getApplicationContext());
+        adapter.addFragment(new HomeFragment());
+        adapter.addFragment(new AddPictureFragment());
+        adapter.addFragment(new ProfileFragment());
+        pager.setAdapter(adapter);
+        tabs.setupWithViewPager(pager);
+        pager.setCurrentItem(0);
+        tabs.getTabAt(0).setIcon(Constants.tabIconsSelected[0]);
+        tabs.getTabAt(1).setIcon(Constants.tabIconsNormal[1]);
+        tabs.getTabAt(2).setIcon(Constants.tabIconsNormal[2]);
+        tabs.addOnTabSelectedListener(this);
+    }
+
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    public void onTabSelected(TabLayout.Tab tab) {
+        tab.setIcon(Constants.tabIconsSelected[tab.getPosition()]);
+        pager.setCurrentItem(tab.getPosition());
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_share:
-                ParseUser.logOut();//temporary for testing
-                Intent gotologin = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(gotologin);
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void onTabUnselected(TabLayout.Tab tab) {
+        tab.setIcon(Constants.tabIconsNormal[tab.getPosition()]);
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

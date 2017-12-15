@@ -21,15 +21,11 @@ import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
 import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
-import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A login screen that offers login via email/password.
@@ -84,24 +80,16 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent gotoRegister = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(gotoRegister);
+                finish();
             }
         });
     }
 
     private void populateAutoComplete() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null) {
-                    if (objects.size() > 0) {
-                        for (ParseObject object : objects) {
-                            usernames.add(object.getString("username"));
-                        }
-                    }
-                }
-            }
-        });
+        usernames.add("iamdamjanmiloshevski");
+        usernames.add("admin");
+        usernames.add("mitko.josifoski");
+        usernames.add("darkomadafaka");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, usernames);
         mUsername.setAdapter(adapter);
