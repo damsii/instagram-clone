@@ -5,17 +5,20 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
 import com.iamdamjanmiloshevski.instagramclone.adapter.InstagramPagesAdapter;
-import com.iamdamjanmiloshevski.instagramclone.fragment.AddPictureFragment;
 import com.iamdamjanmiloshevski.instagramclone.fragment.HomeFragment;
+import com.iamdamjanmiloshevski.instagramclone.fragment.PhotoFragment;
 import com.iamdamjanmiloshevski.instagramclone.fragment.ProfileFragment;
 import com.iamdamjanmiloshevski.instagramclone.utility.Constants;
 import com.parse.ParseAnalytics;
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
     private ViewPager pager;
+    private View logo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,23 +26,24 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Instagram");
+
 
         pager = findViewById(R.id.pages);
         TabLayout tabs = findViewById(R.id.tabs);
 
         setupPages(pager, tabs);
-
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
 
     private void setupPages(final ViewPager pager, TabLayout tabs) {
         InstagramPagesAdapter adapter = new InstagramPagesAdapter(getSupportFragmentManager(), getApplicationContext());
         adapter.addFragment(new HomeFragment());
-        adapter.addFragment(new AddPictureFragment());
+        adapter.addFragment(new PhotoFragment());
         adapter.addFragment(new ProfileFragment());
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
+        pager.addOnPageChangeListener(this);
         pager.setCurrentItem(0);
         tabs.getTabAt(0).setIcon(Constants.tabIconsSelected[0]);
         tabs.getTabAt(1).setIcon(Constants.tabIconsNormal[1]);
@@ -61,6 +65,21 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
     }
 }

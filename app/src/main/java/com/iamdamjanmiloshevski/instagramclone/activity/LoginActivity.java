@@ -30,7 +30,7 @@ import java.util.ArrayList;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements OnClickListener, View.OnKeyListener {
     private final String TAG = LoginActivity.class.getSimpleName();
     private ArrayList<String> usernames = new ArrayList<>();
 
@@ -39,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private View mRegisterView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,31 +64,17 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         TextView mEmailSignInButton = findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
+        mEmailSignInButton.setOnClickListener(this);
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.progress_view);
-        mRegisterView = findViewById(R.id.register);
-        mRegisterView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gotoRegister = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(gotoRegister);
-                finish();
-            }
-        });
+        View mRegisterView = findViewById(R.id.register);
+        mRegisterView.setOnClickListener(this);
+        View relativeLayout = findViewById(R.id.relativeLayout);
+        relativeLayout.setOnClickListener(this);
     }
 
     private void populateAutoComplete() {
-        usernames.add("iamdamjanmiloshevski");
-        usernames.add("admin");
-        usernames.add("mitko.josifoski");
-        usernames.add("darkomadafaka");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, usernames);
         mUsername.setAdapter(adapter);
@@ -113,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mUsername.getText().toString();
+        final String email = mUsername.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -143,25 +128,32 @@ public class LoginActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            Utility.hideSoftKeyboard(this, mPasswordView);
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            ParseUser.logInInBackground(email, password, new LogInCallback() {
-                @Override
-                public void done(ParseUser user, ParseException e) {
-                    if (e == null) {
-                        Log.i(TAG, "Login successful");
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Failed to sign in. Error: " + e.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Login failed. Error: " + e.getMessage());
+            if (!Utility.isNetworkAvailable(this)) {
+                Toast.makeText(LoginActivity.this, "No network connection", Toast.LENGTH_SHORT).show();
+            } else {
+                Utility.hideSoftKeyboard(this, mPasswordView);
+                // Show a progress spinner, and kick off a background task to
+                // perform the user login attempt.
+                showProgress(true);
+                ParseUser.logInInBackground(email, password, new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if (e == null) {
+                            Log.i(TAG, "Login successful");
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            if (!usernames.contains(email)) {
+                                usernames.add(email);
+                            }
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Failed to sign in. Error: " + e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Login failed. Error: " + e.getMessage());
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -202,6 +194,31 @@ public class LoginActivity extends AppCompatActivity {
                 mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.register:
+                Intent gotoRegister = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(gotoRegister);
+                finish();
+            case R.id.email_sign_in_button:
+                attemptLogin();
+            case R.id.relativeLayout:
+                Utility.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+            default:
+                Utility.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+        }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            attemptLogin();
+        }
+        return false;
     }
 }
 

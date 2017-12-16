@@ -22,7 +22,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
     private final String TAG = SignUpActivity.class.getSimpleName();
 
     // UI references.
@@ -30,7 +30,6 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mRegisterFormView;
-    private View mLoginView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +52,14 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         TextView mRegisterButton = findViewById(R.id.email_sign_in_button);
-        mRegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attemptRegistration();
-            }
-        });
+        mRegisterButton.setOnClickListener(this);
 
         mRegisterFormView = findViewById(R.id.register_form);
         mProgressView = findViewById(R.id.progress_view);
-        mLoginView = findViewById(R.id.login);
-        mLoginView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gotoLogin = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(gotoLogin);
-                finish();
-            }
-        });
+        View mLoginView = findViewById(R.id.login);
+        mLoginView.setOnClickListener(this);
+        View relativeLayout = findViewById(R.id.relativeLayout);
+        relativeLayout.setOnClickListener(this);
     }
 
     /**
@@ -119,29 +108,33 @@ public class SignUpActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            Utility.hideSoftKeyboard(this, mPasswordView);
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            ParseUser user = new ParseUser();
-            user.setUsername(email);
-            user.setPassword(password);
-            user.signUpInBackground(new SignUpCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        Log.i(TAG, "Registration successful");
-                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                        Toast.makeText(SignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(SignUpActivity.this, "Registration failed. Error: " + e.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Registration failed. Error: " + e.getMessage());
+            if (!Utility.isNetworkAvailable(this)) {
+                Toast.makeText(SignUpActivity.this, "No network connection", Toast.LENGTH_SHORT).show();
+            } else {
+                Utility.hideSoftKeyboard(this, getCurrentFocus());
+                // Show a progress spinner, and kick off a background task to
+                // perform the user login attempt.
+                showProgress(true);
+                ParseUser user = new ParseUser();
+                user.setUsername(email);
+                user.setPassword(password);
+                user.signUpInBackground(new SignUpCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.i(TAG, "Registration successful");
+                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                            Toast.makeText(SignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(SignUpActivity.this, "Registration failed. Error: " + e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Registration failed. Error: " + e.getMessage());
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -182,5 +175,27 @@ public class SignUpActivity extends AppCompatActivity {
                 mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.login:
+                Intent gotoLogin = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(gotoLogin);
+                finish();
+            case R.id.email_sign_in_button:
+                attemptRegistration();
+            case R.id.relativeLayout:
+                Utility.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+            default:
+                Utility.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+        }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        return false;
     }
 }

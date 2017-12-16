@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
 import com.iamdamjanmiloshevski.instagramclone.adapter.UserAdapter;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -30,7 +32,7 @@ import java.util.List;
  * --------------------------------------------
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
     private List<ParseUser> users = new ArrayList<>();
     private RecyclerView mUsers;
@@ -53,16 +55,7 @@ public class HomeFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mUsers = view.findViewById(R.id.rv_users);
         mUsers.setLayoutManager(layoutManager);
-        getUsers();
-        final UserAdapter adapter = new UserAdapter(getContext(), users);
-        mUsers.setAdapter(adapter);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
-                adapter.notifyDataSetChanged();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void getUsers() {
@@ -74,16 +67,42 @@ public class HomeFragment extends BaseFragment {
                 if (e == null) {
                     if (objects.size() > 0) {
                         users.addAll(objects);
+                        UserAdapter adapter = new UserAdapter(getContext(), users);
+                        mUsers.setAdapter(adapter);
                     }
                 } else {
                     Log.e(TAG, "Error: " + e.getMessage());
                 }
             }
         });
+
+    }
+
+    private void displayCachedUsers() {
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        onRefresh();
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.tab_home;
+    }
+
+    @Override
+    public void onRefresh() {
+        users.clear();
+        swipeRefreshLayout.setRefreshing(false);
+        if (Utility.isNetworkAvailable(getContext())) {
+            getUsers();
+        } else {
+            Toast.makeText(getContext(), "Couldn't refresh feed", Toast.LENGTH_SHORT).show();
+            displayCachedUsers();
+        }
+
+
     }
 }
