@@ -16,7 +16,7 @@ import com.iamdamjanmiloshevski.instagramclone.utility.Constants;
 import com.parse.ParseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
-    private ViewPager pager;
+    public static ViewPager pager;
     private View logo;
 
 

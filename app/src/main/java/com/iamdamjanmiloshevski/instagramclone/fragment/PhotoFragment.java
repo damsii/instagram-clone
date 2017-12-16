@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.activity.MainActivity;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -111,6 +112,10 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
                     public void done(ParseException e) {
                         if (e == null) {
                             Toast.makeText(getContext(), "Image shared successfully", Toast.LENGTH_SHORT).show();
+                            mDescription.setText("");
+                            mTap.setVisibility(View.VISIBLE);
+                            mPhoto.setVisibility(View.GONE);
+                            MainActivity.pager.setCurrentItem(0);
                         } else {
                             Toast.makeText(getContext(), "Image sharing failed. Please try again later!",
                                     Toast.LENGTH_SHORT).show();
