@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
 import com.iamdamjanmiloshevski.instagramclone.adapter.InstagramPagesAdapter;
@@ -13,22 +14,24 @@ import com.iamdamjanmiloshevski.instagramclone.fragment.HomeFragment;
 import com.iamdamjanmiloshevski.instagramclone.fragment.PhotoFragment;
 import com.iamdamjanmiloshevski.instagramclone.fragment.ProfileFragment;
 import com.iamdamjanmiloshevski.instagramclone.utility.Constants;
+import com.iamdamjanmiloshevski.instagramclone.view.InstagramViewPager;
 import com.parse.ParseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
-    public static ViewPager pager;
+    public static InstagramViewPager pager;
     public static Toolbar toolbar;
-    private View logo;
+    public static ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("Instagram");
+        getSupportActionBar().setTitle("");
 
 
+        logo = toolbar.findViewById(R.id.iv_logo);
         pager = findViewById(R.id.pages);
         TabLayout tabs = findViewById(R.id.tabs);
 
@@ -75,7 +78,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     @Override
     public void onPageSelected(int position) {
-
+        if (position == 1) {
+            logo.setVisibility(View.GONE);
+        } else {
+            logo.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

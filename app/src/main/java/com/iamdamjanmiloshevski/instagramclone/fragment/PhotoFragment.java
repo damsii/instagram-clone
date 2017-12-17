@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,7 +13,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -69,20 +71,26 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void initFragmentUI(View view) {
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
         mPhoto = view.findViewById(R.id.iv_image);
         mDescription = view.findViewById(R.id.et_photo_description);
         mTap = view.findViewById(R.id.tv_tap);
         mPhoto.setOnClickListener(this);
         mTap.setOnClickListener(this);
-        mPost = toolbar.findViewById(R.id.tv_post);
-        mPost.setOnClickListener(this);
-        //setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem settingsMenuItem = menu.findItem(R.id.action_post_image);
+        SpannableString s = new SpannableString(settingsMenuItem.getTitle());
+        s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
+        settingsMenuItem.setTitle(s);
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.tab_camera_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -142,7 +150,7 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public int getLayoutId() {
-        return R.layout.tab_camera_nav;
+        return R.layout.tab_camera;
     }
 
     @Override

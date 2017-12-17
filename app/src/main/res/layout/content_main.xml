@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="com.iamdamjanmiloshevski.instagramclone.activity.MainActivity">
 
-    <android.support.v4.view.ViewPager
+    <com.iamdamjanmiloshevski.instagramclone.view.InstagramViewPager
         android:id="@+id/pages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
