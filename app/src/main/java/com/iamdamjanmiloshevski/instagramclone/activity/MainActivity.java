@@ -17,16 +17,16 @@ import com.parse.ParseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
     public static ViewPager pager;
+    public static Toolbar toolbar;
     private View logo;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Instagram");
+        //getSupportActionBar().setTitle("Instagram");
 
 
         pager = findViewById(R.id.pages);

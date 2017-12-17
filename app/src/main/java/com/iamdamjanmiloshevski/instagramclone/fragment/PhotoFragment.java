@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
@@ -33,6 +35,7 @@ import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,6 +55,7 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
     private View mTap;
     private EditText mDescription;
     private ImageView mPhoto;
+    private TextView mPost;
     private int EXTERNAL_STORAGE_REQUEST_CODE = 200;
 
     @Nullable
@@ -65,12 +69,16 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void initFragmentUI(View view) {
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
         mPhoto = view.findViewById(R.id.iv_image);
         mDescription = view.findViewById(R.id.et_photo_description);
         mTap = view.findViewById(R.id.tv_tap);
         mPhoto.setOnClickListener(this);
         mTap.setOnClickListener(this);
-        setHasOptionsMenu(true);
+        mPost = toolbar.findViewById(R.id.tv_post);
+        mPost.setOnClickListener(this);
+        //setHasOptionsMenu(true);
     }
 
     @Override
@@ -94,15 +102,21 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
         return super.onOptionsItemSelected(item);
     }
 
+    private String generateImageName() {
+        Random random = new Random();
+        int i = random.nextInt(1000);
+        return "image" + Integer.toString(i) + ".png";
+    }
+
     private void uploadImageToServer(Drawable drawable) {
         if (drawable != null) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
             Bitmap image = bitmapDrawable.getBitmap();
             if (image != null) {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                image.compress(Bitmap.CompressFormat.PNG, 30, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
-                ParseFile file = new ParseFile("image1.png", byteArray);
+                ParseFile file = new ParseFile(generateImageName(), byteArray);
                 ParseObject object = new ParseObject("Image");
                 object.put("image", file);
                 object.put("description", mDescription.getText().toString());
@@ -128,7 +142,7 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public int getLayoutId() {
-        return R.layout.tab_camera;
+        return R.layout.tab_camera_nav;
     }
 
     @Override
@@ -140,6 +154,8 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
                 mTap.setVisibility(View.GONE);
             case R.id.iv_image:
                 processImage();
+            case R.id.tv_post:
+                uploadImageToServer(mPhoto.getDrawable());
             default:
                 processImage();
         }

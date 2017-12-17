@@ -1,17 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_username"
+    <RelativeLayout
+        android:id="@+id/user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_sign_in" />
+        android:background="#fff">
 
+        <RelativeLayout
+            android:id="@+id/user_details"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_picture"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_app_logo"
+                app:civ_border_color="#dcdcdc"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
+                android:layout_height="25sp"
+                android:layout_centerInParent="true"
+                android:layout_toEndOf="@id/profile_picture"
+                android:paddingTop="3dp"
+                android:text="iamdamjanmiloshevski"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/user_details" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_image"
+            android:paddingStart="10dp"
+            android:textSize="14sp" />
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/tv_username"
+        android:layout_below="@id/user"
         android:background="@color/colorAccent" />
 </RelativeLayout>

@@ -16,6 +16,7 @@ import com.iamdamjanmiloshevski.instagramclone.adapter.UserAdapter;
 import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -58,20 +59,18 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    private void getUsers() {
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.addAscendingOrder("username");
-        query.findInBackground(new FindCallback<ParseUser>() {
+
+    private void getFeed() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Image");
+        query.orderByDescending("createdAt");
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<ParseUser> objects, ParseException e) {
+            public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     if (objects.size() > 0) {
-                        users.addAll(objects);
-                        UserAdapter adapter = new UserAdapter(getContext(), users);
+                        UserAdapter adapter = new UserAdapter(getContext(), objects);
                         mUsers.setAdapter(adapter);
                     }
-                } else {
-                    Log.e(TAG, "Error: " + e.getMessage());
                 }
             }
         });
@@ -97,7 +96,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         users.clear();
         swipeRefreshLayout.setRefreshing(false);
         if (Utility.isNetworkAvailable(getContext())) {
-            getUsers();
+            getFeed();
         } else {
             Toast.makeText(getContext(), "Couldn't refresh feed", Toast.LENGTH_SHORT).show();
             displayCachedUsers();
