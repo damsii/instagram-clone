@@ -34,7 +34,7 @@
                 android:layout_centerInParent="true"
                 android:text="Change photo"
                 android:textColor="#7ec0ee"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:id="@+id/name"
@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_change_photo"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -49,12 +50,17 @@
                     android:layout_height="wrap_content"
                     android:text="Name"
                     android:textColor="#2f4f4f" />
-                />
 
-                <EditText
-                    android:id="@+id/et_full_name"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_full_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -63,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/name"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -70,12 +77,17 @@
                     android:layout_height="wrap_content"
                     android:text="Username"
                     android:textColor="#2f4f4f" />
-                />
 
-                <EditText
-                    android:id="@+id/et_username"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -84,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/username"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -96,7 +109,8 @@
                 <EditText
                     android:id="@+id/et_web"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:autoLink="web" />
             </LinearLayout>
 
             <LinearLayout
@@ -105,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/website"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -118,6 +133,95 @@
                     android:id="@+id/et_bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/bio"
+                android:layout_marginTop="5dp"
+                android:background="#2f4f4f" />
+
+            <TextView
+                android:id="@+id/private_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Private Information"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/private_info"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="E-mail Address"
+                    android:textColor="#2f4f4f" />
+                />
+
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/email"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Phone number"
+                    android:textColor="#2f4f4f" />
+                />
+
+                <EditText
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone_number"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:textColor="#2f4f4f" />
+                />
+
+                <Spinner
+                    android:id="@+id/sp_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:enabled="false" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

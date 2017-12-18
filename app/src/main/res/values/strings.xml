@@ -19,4 +19,5 @@
     <string name="underlined"><u><b>here</b></u></string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="title_activity_edit_email">EditEmailActivity</string>
 </resources>

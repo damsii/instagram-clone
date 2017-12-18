@@ -46,8 +46,14 @@
         <activity
             android:name=".activity.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.EditEmailActivity"
+            android:label="@string/title_activity_edit_email"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
