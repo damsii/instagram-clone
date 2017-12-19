@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public static InstagramViewPager pager;
     public static Toolbar toolbar;
     public static ImageView logo;
+    private ImageView more;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         getSupportActionBar().setTitle("");
 
 
-        logo = toolbar.findViewById(R.id.iv_logo);
+        logo = toolbar.findViewById(R.id.tv_logo);
         pager = findViewById(R.id.pages);
+        more = toolbar.findViewById(R.id.iv_more);
         TabLayout tabs = findViewById(R.id.tabs);
 
         setupPages(pager, tabs);
@@ -78,10 +80,19 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     @Override
     public void onPageSelected(int position) {
-        if (position == 1) {
-            logo.setVisibility(View.GONE);
-        } else {
-            logo.setVisibility(View.VISIBLE);
+        switch (position) {
+            case 0:
+                more.setVisibility(View.INVISIBLE);
+                logo.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                more.setVisibility(View.INVISIBLE);
+                logo.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                logo.setVisibility(View.VISIBLE);
+                more.setVisibility(View.VISIBLE);
+                break;
         }
     }
 

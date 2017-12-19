@@ -49,7 +49,6 @@
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-
     <include
         layout="@layout/tab_camera"
         tools:layout_editor_absoluteX="16dp"

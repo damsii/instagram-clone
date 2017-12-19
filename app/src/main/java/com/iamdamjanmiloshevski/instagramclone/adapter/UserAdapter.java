@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
-import com.iamdamjanmiloshevski.instagramclone.activity.EditProfileActivity;
+import com.iamdamjanmiloshevski.instagramclone.activity.ProfileActivity;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -106,7 +106,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             username.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, EditProfileActivity.class);
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("username", username.getText().toString());
                     context.startActivity(intent);
                 }
             });

@@ -75,6 +75,13 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
         mDescription = view.findViewById(R.id.et_photo_description);
         mTap = view.findViewById(R.id.tv_tap);
         mPhoto.setOnClickListener(this);
+//        mPost = MainActivity.toolbar.findViewById(R.id.tv_post);
+//        mPost.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Here", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         mTap.setOnClickListener(this);
         setHasOptionsMenu(true);
     }
