@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +32,6 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = HomeFragment.class.getSimpleName();
-    private List<ParseUser> users = new ArrayList<>();
     private RecyclerView mUsers;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -74,7 +70,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
             }
         });
-
     }
 
     private void displayCachedUsers() {
@@ -93,7 +88,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        users.clear();
         swipeRefreshLayout.setRefreshing(false);
         if (Utility.isNetworkAvailable(getContext())) {
             getFeed();

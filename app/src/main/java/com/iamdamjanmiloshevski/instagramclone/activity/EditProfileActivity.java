@@ -1,6 +1,9 @@
 package com.iamdamjanmiloshevski.instagramclone.activity;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -20,6 +23,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,12 +52,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private TextView mChangePhoto;
     private EditText mFullName, mUsername, mWeb, mBio, mEmail, mPhone;
     private Spinner mGender;
+    private ScrollView mEditProfileView;
+    private RelativeLayout mProgressView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         initUI();
@@ -73,11 +81,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.setLimit(1);
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        showProgress(true);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> objects, ParseException e) {
                 if (e == null) {
                     if (objects.size() > 0) {
+                        showProgress(false);
                         ParseUser user = objects.get(0);
                         String fullName = user.getString("name") + " " + user.getString("surname");
                         mFullName.setText(fullName);
@@ -115,6 +125,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initUI() {
+        mExit = toolbar.findViewById(R.id.iv_exit);
+        mConfirm = toolbar.findViewById(R.id.iv_confirm);
         mProfilePhoto = findViewById(R.id.iv_profile_picture);
         mChangePhoto = findViewById(R.id.tv_change_photo);
         mFullName = findViewById(R.id.et_full_name);
@@ -124,11 +136,48 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         mEmail = findViewById(R.id.et_email);
         mPhone = findViewById(R.id.et_phone_number);
         mGender = findViewById(R.id.sp_gender);
-        mExit = findViewById(R.id.iv_exit);
-        mConfirm = findViewById(R.id.iv_confirm);
+        mEditProfileView = findViewById(R.id.edit_profile_view);
+        mProgressView = findViewById(R.id.progress_view);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(EditProfileActivity.this,
                 android.R.layout.simple_spinner_item, Constants.gender);
         mGender.setAdapter(adapter);
+    }
+
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        mEditProfileView.setVisibility(show ? View.GONE : View.VISIBLE);
+        // mConfirm.setVisibility(show ? View.GONE : View.VISIBLE);
+        mEditProfileView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mEditProfileView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+        mConfirm.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mConfirm.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     @Override
@@ -139,13 +188,24 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
+                break;
             case R.id.iv_confirm:
                 saveData();
+                Intent intent1 = new Intent(EditProfileActivity.this, MainActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
             case R.id.tv_change_photo:
                 processImage();
+                break;
             case R.id.et_email:
-                Intent intent1 = new Intent(EditProfileActivity.this, EditEmailActivity.class);
-                startActivity(intent1);
+                Intent intent2 = new Intent(EditProfileActivity.this, EditEmailActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.et_phone_number:
+                Intent intent3 = new Intent(EditProfileActivity.this, EditPhoneNumberActivity.class);
+                startActivity(intent3);
+                break;
         }
     }
 

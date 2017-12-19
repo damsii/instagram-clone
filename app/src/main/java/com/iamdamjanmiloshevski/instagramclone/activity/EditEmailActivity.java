@@ -23,18 +23,25 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_email);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         initUI();
+        getEmail();
     }
 
     private void initUI() {
-        ImageView mExit = findViewById(R.id.iv_exit);
-        ImageView mConfirm = findViewById(R.id.iv_confirm);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ImageView mExit = toolbar.findViewById(R.id.iv_exit_email);
+        ImageView mConfirm = toolbar.findViewById(R.id.iv_confirm_email);
         mEmail = findViewById(R.id.et_email);
         mConfirm.setOnClickListener(this);
         mExit.setOnClickListener(this);
+    }
+
+    public void getEmail() {
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        String email = parseUser.getEmail();
+        mEmail.setText(email);
+        mEmail.setSelection(email.length());
     }
 
     private void updateEmail() {
@@ -71,12 +78,14 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.iv_confirm:
+            case R.id.iv_confirm_email:
                 updateEmail();
-            case R.id.iv_exit:
+                break;
+            case R.id.iv_exit_email:
                 Intent intent = new Intent(EditEmailActivity.this, EditProfileActivity.class);
                 startActivity(intent);
                 finish();
+                break;
         }
     }
 }

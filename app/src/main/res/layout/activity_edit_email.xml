@@ -15,15 +15,15 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:background="#fff"
+            app:popupTheme="@style/AppTheme.NoActionBar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/iv_exit"
+                    android:id="@+id/iv_exit_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -36,13 +36,13 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@id/iv_exit"
+                    android:layout_toEndOf="@id/iv_exit_email"
                     android:text="Change Email"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
                 <ImageView
-                    android:id="@+id/iv_confirm"
+                    android:id="@+id/iv_confirm_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
