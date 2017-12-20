@@ -74,6 +74,7 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
         return email.matches("[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\_\\.]+\\.[a-zA-Z0-9]{3}");
     }
 
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -84,7 +85,6 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
             case R.id.iv_exit_email:
                 Intent intent = new Intent(EditEmailActivity.this, EditProfileActivity.class);
                 startActivity(intent);
-                finish();
                 break;
         }
     }

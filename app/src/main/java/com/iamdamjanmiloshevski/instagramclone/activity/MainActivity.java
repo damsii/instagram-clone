@@ -1,5 +1,6 @@
 package com.iamdamjanmiloshevski.instagramclone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -35,6 +36,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         logo = toolbar.findViewById(R.id.tv_logo);
         pager = findViewById(R.id.pages);
         more = toolbar.findViewById(R.id.iv_more);
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OptionsActivity.class);
+                startActivity(intent);
+            }
+        });
         TabLayout tabs = findViewById(R.id.tabs);
 
         setupPages(pager, tabs);

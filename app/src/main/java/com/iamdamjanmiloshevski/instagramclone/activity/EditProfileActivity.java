@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -55,12 +56,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private ScrollView mEditProfileView;
     private RelativeLayout mProgressView;
     private Toolbar toolbar;
+    private String gender = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         toolbar = findViewById(R.id.toolbar);
+        mExit = toolbar.findViewById(R.id.iv_exit);
+        mConfirm = toolbar.findViewById(R.id.iv_confirm);
         setSupportActionBar(toolbar);
 
         initUI();
@@ -74,7 +78,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         mChangePhoto.setOnClickListener(this);
         mEmail.setOnClickListener(this);
         mPhone.setOnClickListener(this);
-        //mGender;
+        mGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                gender = parent.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void getData() {
@@ -124,9 +138,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
     private void initUI() {
-        mExit = toolbar.findViewById(R.id.iv_exit);
-        mConfirm = toolbar.findViewById(R.id.iv_confirm);
         mProfilePhoto = findViewById(R.id.iv_profile_picture);
         mChangePhoto = findViewById(R.id.tv_change_photo);
         mFullName = findViewById(R.id.et_full_name);
@@ -185,9 +201,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         int id = v.getId();
         switch (id) {
             case R.id.iv_exit:
-                Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
+//                startActivity(intent);
+                onBackPressed();
+                //finish();
                 break;
             case R.id.iv_confirm:
                 saveData();
@@ -290,7 +307,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             user.put("about_me", bio);
             user.put("web", website);
             user.put("profile_image", file);
-            switch (mGender.getSelectedItem().toString()) {
+            switch (gender) {
                 case "Not Specified":
                     user.put("gender", 2);
                 case "Male":
@@ -298,20 +315,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 case "Female":
                     user.put("gender", 1);
             }
-//                    user.saveInBackground(new SaveCallback() {
-//                        @Override
-//                        public void done(ParseException e) {
-//                            if (e == null) {
-//                                Toast.makeText(EditProfileActivity.this, "Image shared successfully",
-//                                        Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                Log.e(TAG, e.getMessage());
-//                                Toast.makeText(EditProfileActivity.this,
-//                                        "Image sharing failed. Please try again later!",
-//                                        Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
             user.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {

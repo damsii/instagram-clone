@@ -220,5 +220,10 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         }
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
 

@@ -61,6 +61,15 @@
         <activity
             android:name=".activity.ProfileActivity"
             android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.OptionsActivity"
+            android:label="@string/title_activity_options"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:label="@string/title_activity_change_password"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

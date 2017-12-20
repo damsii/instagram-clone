@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
@@ -57,7 +56,6 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
     private View mTap;
     private EditText mDescription;
     private ImageView mPhoto;
-    private TextView mPost;
     private int EXTERNAL_STORAGE_REQUEST_CODE = 200;
 
     @Nullable
@@ -75,13 +73,6 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
         mDescription = view.findViewById(R.id.et_photo_description);
         mTap = view.findViewById(R.id.tv_tap);
         mPhoto.setOnClickListener(this);
-//        mPost = MainActivity.toolbar.findViewById(R.id.tv_post);
-//        mPost.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Here", Toast.LENGTH_SHORT).show();
-//            }
-//        });
         mTap.setOnClickListener(this);
         setHasOptionsMenu(true);
     }
@@ -112,7 +103,11 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
         int id = item.getItemId();
         switch (id) {
             case R.id.action_post_image:
-                uploadImageToServer(mPhoto.getDrawable());
+                Toast.makeText(getActivity(), "Post", Toast.LENGTH_SHORT).show();
+                //uploadImageToServer(mPhoto.getDrawable());
+                break;
+            case R.id.action_delete:
+                Toast.makeText(getActivity(), "Delete", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
