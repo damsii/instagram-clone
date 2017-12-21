@@ -2,6 +2,7 @@ package com.iamdamjanmiloshevski.instagramclone.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -34,11 +35,13 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         TextView mLanguage = findViewById(R.id.tv_language);
         TextView mAbout = findViewById(R.id.tv_about);
         TextView mLogout = findViewById(R.id.tv_log_out);
+        TextView mShare = findViewById(R.id.tv_share_app);
         mEditProfile.setOnClickListener(this);
         mChangePassword.setOnClickListener(this);
         mLanguage.setOnClickListener(this);
         mAbout.setOnClickListener(this);
         mLogout.setOnClickListener(this);
+        mShare.setOnClickListener(this);
 
     }
 
@@ -56,9 +59,21 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.tv_language:
                 break;
             case R.id.tv_about:
+                Intent intent2 = new Intent(OptionsActivity.this, AboutActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.tv_log_out:
                 logout();
+                break;
+            case R.id.tv_share_app:
+                Intent email = new Intent(Intent.ACTION_SENDTO);
+                email.setData(Uri.parse("mailto:")); // only email apps should handle this
+                email.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.subject_share));
+                email.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.content_share));
+                if (email.resolveActivity(this.getPackageManager()) != null) {
+                    startActivity(Intent.createChooser(email, "Send Email using..."));
+                }
+                startActivity(Intent.createChooser(email, "Send Email using..."));
                 break;
         }
 
@@ -76,7 +91,9 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ParseUser.logOut();
-                        Intent intent = new Intent(OptionsActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(OptionsActivity.this, MainActivity.class);
+                        intent.putExtra("finish", true);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
                     }

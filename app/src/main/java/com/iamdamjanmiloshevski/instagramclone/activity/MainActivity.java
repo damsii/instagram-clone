@@ -28,14 +28,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
 
+        boolean finish = getIntent().getBooleanExtra("finish", false);
+        if (finish) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
+        initUI();
+        getComponentsActions();
+    }
 
-        logo = toolbar.findViewById(R.id.tv_logo);
-        pager = findViewById(R.id.pages);
-        more = toolbar.findViewById(R.id.iv_more);
+    private void getComponentsActions() {
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,6 +47,17 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 startActivity(intent);
             }
         });
+    }
+
+    private void initUI() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+
+        logo = toolbar.findViewById(R.id.tv_logo);
+        pager = findViewById(R.id.pages);
+        more = toolbar.findViewById(R.id.iv_more);
+
         TabLayout tabs = findViewById(R.id.tabs);
 
         setupPages(pager, tabs);
@@ -107,5 +122,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

@@ -24,4 +24,53 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="disclaimer1"><b>#1</b> This app is a clone of the World\'s most famous social app Instagram,
+        developed and maintaned by Facebook Inc. </string>
+    <string name="disclaimer2"><b>#2</b> This app does not use Instagram\'s real servers and content, it has own server
+and data mostly used for demo purposes</string>
+    <string name="disclaimer3"><b>#3</b> Any data stored in this app is not related in any way to Instagram or
+Facebook Inc. </string>
+    <string name="disclaimer4"><b>#4</b> This app is never going to be live on Google Play because it\'s main purpose
+is not to copy the real Instagram.</string>
+    <string name="desc">I wanted to create a clone of the world\'s most famous social application Instagram,
+to improve and strengthen my skills as Android developer. </string>
+    <string name="comments">Please leave your comments on my email <u>d.miloshevski@gmail.com</u></string>
+    <string name="privacy_policy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="terms">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
+consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem
+ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut
+labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam
+corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui
+in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</string>
+    <string name="contact1">#1 via email <u>d.miloshevski@gmail.com</u></string>
+    <string name="contact2">#2 via direct messages on my social media accounts</string>
+    <string name="hiring">If you want to hire me for an Android project please follow as specified below:</string>
+    <string name="company">Company: iamdamjanmiloshevski.com</string>
+    <string name="information">Information:</string>
+    <string name="developer">Developer: Damjan Miloshevski</string>
+    <string name="Disclaimer">Disclaimer:</string>
+    <string name="contact3">#3 via Whatsapp, SMS orViber</string>
+    <string name="privacy_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="terms_use">Terms of Use:</string>
+    <string name="terms_text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</string>
+    <string name="rights">All rights reserved.</string>
+    <string name="copyrights">© iamdamjanmiloshevski.com, 2018</string>
+    <string name="developer_email">d.miloshevski@gmail.com</string>
+    <string name="subject_hiring">Job proposal for Android project</string>
+    <string name="subject_comments">Feedback
+on your Instagram Clone app</string>
+    <string name="subject_share">Check this app out!</string>
+    <string name="content_share">Hey, try out this app from <u>https://github.com/damsii/instagram-clone</u></string>
+    <string name="subject_forgot_password">Instagram Clone: Forgotten password</string>
+    <string name="message_forgot_pass">Hey, I forgot my password. Can you please reset it and send it to me?
+    My username is:</string>
+    <string name="email"><u>d.miloshevski@gmail.com</u></string>
 </resources>

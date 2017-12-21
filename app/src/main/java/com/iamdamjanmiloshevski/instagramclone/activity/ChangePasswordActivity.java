@@ -1,5 +1,7 @@
 package com.iamdamjanmiloshevski.instagramclone.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -89,6 +91,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         mVerifyPass = findViewById(R.id.et_verify_pass);
         mCurrentPass.setOnClickListener(this);
         mVerifyPass.setOnClickListener(this);
+        TextView mEmail = findViewById(R.id.tv_email);
+        mEmail.setOnClickListener(this);
         ImageView mExit = toolbar.findViewById(R.id.iv_exit);
         mExit.setOnClickListener(this);
         ImageView mConfirm = toolbar.findViewById(R.id.iv_confirm);
@@ -116,6 +120,18 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.iv_confirm:
                 changePassword();
+                break;
+            case R.id.tv_email:
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.developer_email)});
+                intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.subject_forgot_password));
+                intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.message_forgot_pass) + " " +
+                        ParseUser.getCurrentUser().getUsername());
+                if (intent.resolveActivity(this.getPackageManager()) != null) {
+                    startActivity(Intent.createChooser(intent, "Send Email using..."));
+                }
+                startActivity(Intent.createChooser(intent, "Send Email using..."));
                 break;
         }
     }

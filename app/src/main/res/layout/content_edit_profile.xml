@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp" />
     </RelativeLayout>
+
     <ScrollView
         android:id="@+id/edit_profile_view"
         android:layout_width="match_parent"
@@ -120,12 +121,12 @@
                     android:text="Web"
                     android:textColor="#2f4f4f" />
                 />
-
                 <EditText
                     android:id="@+id/et_web"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autoLink="web" />
+                    android:autoLink="web"
+                    android:textColorLink="#2f4f4f" />
             </LinearLayout>
 
             <LinearLayout

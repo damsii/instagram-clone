@@ -2,8 +2,10 @@ package com.iamdamjanmiloshevski.instagramclone.utility;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -68,5 +70,16 @@ public class Utility {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public static void sendEmail(Context context, String email, String subject) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(Intent.createChooser(intent, "Send Email using..."));
+        }
+        context.startActivity(Intent.createChooser(intent, "Send Email using..."));
     }
 }
