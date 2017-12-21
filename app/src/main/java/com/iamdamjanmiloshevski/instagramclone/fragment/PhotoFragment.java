@@ -1,6 +1,9 @@
 package com.iamdamjanmiloshevski.instagramclone.fragment;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -24,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
@@ -52,11 +56,14 @@ import static android.app.Activity.RESULT_OK;
 
 public class PhotoFragment extends BaseFragment implements View.OnClickListener {
     private static final String TAG = PhotoFragment.class.getSimpleName();
+    private static final long MAX_SIZE = 10485760;
     private static final int REQUEST_CODE_PHOTO = 100;
     private View mTap;
     private EditText mDescription;
     private ImageView mPhoto;
     private int EXTERNAL_STORAGE_REQUEST_CODE = 200;
+    private RelativeLayout imageView;
+    private RelativeLayout progressView;
 
     @Nullable
     @Override
@@ -72,7 +79,8 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
         mPhoto = view.findViewById(R.id.iv_image);
         mDescription = view.findViewById(R.id.et_photo_description);
         mTap = view.findViewById(R.id.tv_tap);
-        mPhoto.setOnClickListener(this);
+        imageView = view.findViewById(R.id.post_image);
+        progressView = view.findViewById(R.id.progress_view);
         mTap.setOnClickListener(this);
         setHasOptionsMenu(true);
     }
@@ -103,11 +111,17 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
         int id = item.getItemId();
         switch (id) {
             case R.id.action_post_image:
-                Toast.makeText(getActivity(), "Post", Toast.LENGTH_SHORT).show();
-                //uploadImageToServer(mPhoto.getDrawable());
+                if (mPhoto.getDrawable() == null) {
+                    processImage();
+                } else {
+                    uploadImageToServer(mPhoto.getDrawable());
+                }
                 break;
             case R.id.action_delete:
-                Toast.makeText(getActivity(), "Delete", Toast.LENGTH_SHORT).show();
+                mPhoto.setImageBitmap(null);
+                mPhoto.setVisibility(View.GONE);
+                mTap.setVisibility(View.VISIBLE);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -123,31 +137,77 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
             Bitmap image = bitmapDrawable.getBitmap();
             if (image != null) {
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                image.compress(Bitmap.CompressFormat.PNG, 30, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream.toByteArray();
-                ParseFile file = new ParseFile(generateImageName(), byteArray);
-                ParseObject object = new ParseObject("Image");
-                object.put("image", file);
-                object.put("description", mDescription.getText().toString());
-                object.put("username", ParseUser.getCurrentUser().getUsername());
-                object.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Toast.makeText(getContext(), "Image shared successfully", Toast.LENGTH_SHORT).show();
-                            mDescription.setText("");
-                            mTap.setVisibility(View.VISIBLE);
-                            mPhoto.setVisibility(View.GONE);
-                            MainActivity.pager.setCurrentItem(0);
-                        } else {
-                            Toast.makeText(getContext(), "Image sharing failed. Please try again later!",
-                                    Toast.LENGTH_SHORT).show();
+                try {
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    image.compress(Bitmap.CompressFormat.PNG, 30, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream.toByteArray();
+                    ParseFile file = new ParseFile(generateImageName(), byteArray);
+                    ParseObject object = new ParseObject("Image");
+                    object.put("image", file);
+                    object.put("description", mDescription.getText().toString());
+                    object.put("username", ParseUser.getCurrentUser().getUsername());
+                    showProgress(true);
+                    object.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                showProgress(false);
+                                Toast.makeText(getContext(), "Image shared successfully", Toast.LENGTH_SHORT).show();
+                                mDescription.setText("");
+                                mTap.setVisibility(View.VISIBLE);
+                                mPhoto.setVisibility(View.GONE);
+                                MainActivity.pager.setCurrentItem(0);
+                            } else {
+                                showProgress(false);
+                                mPhoto.setImageBitmap(null);
+                                mPhoto.setVisibility(View.GONE);
+                                mTap.setVisibility(View.VISIBLE);
+                                Toast.makeText(getContext(), "Image sharing failed. Please try again later!",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                } catch (IllegalArgumentException e) {
+                    showProgress(false);
+                    mPhoto.setImageBitmap(null);
+                    mPhoto.setVisibility(View.GONE);
+                    mTap.setVisibility(View.VISIBLE);
+                    Log.e(TAG, e.getMessage());
+                    String error = "Image too large.\nPlease select image lower than 10.48MB";
+                    Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
+                }
             }
         }
+    }
+
+    /**
+     * Shows the progress UI and hides the login formiam
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        imageView.setVisibility(show ? View.GONE : View.VISIBLE);
+        // mConfirm.setVisibility(show ? View.GONE : View.VISIBLE);
+        imageView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                imageView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     @Override
@@ -162,12 +222,9 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
             case R.id.tv_tap:
                 mPhoto.setVisibility(View.VISIBLE);
                 mTap.setVisibility(View.GONE);
-            case R.id.iv_image:
+                mPhoto.setImageBitmap(null);
                 processImage();
-            case R.id.tv_post:
-                uploadImageToServer(mPhoto.getDrawable());
-            default:
-                processImage();
+                break;
         }
     }
 
@@ -215,6 +272,6 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
 
     private void getPhoto() {
         Intent iPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(iPhoto, REQUEST_CODE_PHOTO);
+        startActivityForResult(Intent.createChooser(iPhoto, "Select Image"), REQUEST_CODE_PHOTO);
     }
 }
