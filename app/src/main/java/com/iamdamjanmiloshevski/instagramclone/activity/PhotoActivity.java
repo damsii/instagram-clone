@@ -1,5 +1,6 @@
 package com.iamdamjanmiloshevski.instagramclone.activity;
 
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,10 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -104,6 +108,75 @@ public class PhotoActivity extends AppCompatActivity {
         username = findViewById(R.id.tv_username);
         image = findViewById(R.id.iv_image);
         description = findViewById(R.id.tv_description);
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(PhotoActivity.this);
+                dialog.setContentView(R.layout.photo_options);
+
+
+                TextView mEdit = dialog.findViewById(R.id.tv_edit_photo);
+                TextView mDelete = dialog.findViewById(R.id.tv_delete_photo);
+
+                mEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(PhotoActivity.this, "Here", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                mDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Dialog confirmDeletionDialog = new Dialog(PhotoActivity.this);
+                        confirmDeletionDialog.setContentView(R.layout.confirm_deletion);
+
+                        Button mDelete = confirmDeletionDialog.findViewById(R.id.bt_delete);
+                        Button mCancel = confirmDeletionDialog.findViewById(R.id.bt_cancel);
+
+                        mDelete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                deleteImage();
+                            }
+                        });
+                        mCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                confirmDeletionDialog.dismiss();
+                                dialog.dismiss();
+                            }
+                        });
+                        confirmDeletionDialog.show();
+                    }
+                });
+                dialog.show();
+            }
+        });
+    }
+
+    private void deleteImage() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Image");
+        query.whereEqualTo("objectId", getIntent().getStringExtra("imageId"));
+        query.setLimit(1);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    if (objects.size() > 0) {
+                        objects.get(0).deleteInBackground(new DeleteCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Toast.makeText(PhotoActivity.this, "Image deleted successfully",
+                                            Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
     }
 
     @Override
