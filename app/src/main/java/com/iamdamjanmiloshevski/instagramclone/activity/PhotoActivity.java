@@ -1,6 +1,7 @@
 package com.iamdamjanmiloshevski.instagramclone.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -93,6 +94,12 @@ public class PhotoActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayData();
+    }
+
     private void initUI() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -121,7 +128,11 @@ public class PhotoActivity extends AppCompatActivity {
                 mEdit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(PhotoActivity.this, "Here", Toast.LENGTH_SHORT).show();
+                        Intent iEditPhoto = new Intent(PhotoActivity.this, EditInfoActivity.class);
+                        iEditPhoto.putExtra("username", getIntent().getStringExtra("username"));
+                        iEditPhoto.putExtra("imageId", getIntent().getStringExtra("imageId"));
+                        startActivity(iEditPhoto);
+                        dialog.dismiss();
                     }
                 });
                 mDelete.setOnClickListener(new View.OnClickListener() {

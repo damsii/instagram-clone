@@ -74,4 +74,5 @@ on your Instagram Clone app</string>
     My username is:</string>
     <string name="email"><u>d.miloshevski@gmail.com</u></string>
     <string name="title_activity_photo">PhotoActivity</string>
+    <string name="title_activity_edit_info">EditInfoActivity</string>
 </resources>
