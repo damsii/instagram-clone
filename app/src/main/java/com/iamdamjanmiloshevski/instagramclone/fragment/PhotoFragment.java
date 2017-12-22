@@ -118,6 +118,7 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
                 }
                 break;
             case R.id.action_delete:
+                mDescription.setText("");
                 mPhoto.setImageBitmap(null);
                 mPhoto.setVisibility(View.GONE);
                 mTap.setVisibility(View.VISIBLE);
@@ -154,11 +155,13 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
                                 showProgress(false);
                                 Toast.makeText(getContext(), "Image shared successfully", Toast.LENGTH_SHORT).show();
                                 mDescription.setText("");
+                                mPhoto.setImageBitmap(null);
                                 mTap.setVisibility(View.VISIBLE);
                                 mPhoto.setVisibility(View.GONE);
                                 MainActivity.pager.setCurrentItem(0);
                             } else {
                                 showProgress(false);
+                                mDescription.setText("");
                                 mPhoto.setImageBitmap(null);
                                 mPhoto.setVisibility(View.GONE);
                                 mTap.setVisibility(View.VISIBLE);
@@ -169,6 +172,7 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
                     });
                 } catch (IllegalArgumentException e) {
                     showProgress(false);
+                    mDescription.setText("");
                     mPhoto.setImageBitmap(null);
                     mPhoto.setVisibility(View.GONE);
                     mTap.setVisibility(View.VISIBLE);

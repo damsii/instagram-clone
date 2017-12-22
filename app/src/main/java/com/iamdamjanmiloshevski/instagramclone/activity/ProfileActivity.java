@@ -5,32 +5,40 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.adapter.GridImagesAdapter;
+import com.iamdamjanmiloshevski.instagramclone.adapter.UserAdapter;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
+    private static final String TAG = ProfileActivity.class.getSimpleName();
     private de.hdodenhof.circleimageview.CircleImageView mProfileImage;
     private TextView mFullName, mAboutMe, mTitle;
     private GridView mImages;
-    private ListView mListImages;
+    private RecyclerView mListImages;
     private ImageView mGrid, mList;
     private Intent intent;
+    private boolean imageView = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         fillUI();
         fillData();
-
+        getUserPhotos();
     }
 
     private void fillUI() {
@@ -52,6 +60,8 @@ public class ProfileActivity extends AppCompatActivity {
         mAboutMe = findViewById(R.id.tv_about_me);
         mImages = findViewById(R.id.gv_images);
         mListImages = findViewById(R.id.lv_images);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ProfileActivity.this);
+        mListImages.setLayoutManager(layoutManager);
         mGrid = findViewById(R.id.iv_grid_view);
         mList = findViewById(R.id.iv_list_view);
         intent = getIntent();
@@ -61,6 +71,16 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ProfileActivity.this, "Coming soon...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mImages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent iPhoto = new Intent(ProfileActivity.this, PhotoActivity.class);
+                ParseObject image = (ParseObject) parent.getAdapter().getItem(position);
+                iPhoto.putExtra("username", intent.getStringExtra("username"));
+                iPhoto.putExtra("imageId", image.getObjectId());
+                startActivity(iPhoto);
             }
         });
     }
@@ -83,6 +103,43 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    private void getUserPhotos() {
+        if (imageView) {
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Image");
+            query.whereEqualTo("username", intent.getStringExtra("username"));
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    if (e == null) {
+                        if (objects.size() > 0) {
+                            GridImagesAdapter adapter = new GridImagesAdapter(ProfileActivity.this, objects);
+                            mImages.setAdapter(adapter);
+                        }
+                    } else {
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            });
+        } else {
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Image");
+            query.whereEqualTo("username", intent.getStringExtra("username"));
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    if (e == null) {
+                        if (objects.size() > 0) {
+                            UserAdapter adapter = new UserAdapter(ProfileActivity.this, objects);
+                            mListImages.setAdapter(adapter);
+                        }
+                    } else {
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            });
+        }
     }
 
     private void displayImage(ParseUser user) {
@@ -112,5 +169,26 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    public void displayView(View view) {
+        switch (view.getId()) {
+            case R.id.iv_grid_view:
+                imageView = true;
+                mImages.setVisibility(View.VISIBLE);
+                mListImages.setVisibility(View.GONE);
+                mGrid.setImageResource(R.drawable.ic_grid_selected);
+                mList.setImageResource(R.drawable.ic_list);
+                getUserPhotos();
+                break;
+            case R.id.iv_list_view:
+                imageView = false;
+                mImages.setVisibility(View.GONE);
+                mListImages.setVisibility(View.VISIBLE);
+                mGrid.setImageResource(R.drawable.ic_grid);
+                mList.setImageResource(R.drawable.ic_list_selected);
+                getUserPhotos();
+                break;
+        }
     }
 }

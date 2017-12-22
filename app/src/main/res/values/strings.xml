@@ -73,4 +73,5 @@ on your Instagram Clone app</string>
     <string name="message_forgot_pass">Hey, I forgot my password. Can you please reset it and send it to me?
     My username is:</string>
     <string name="email"><u>d.miloshevski@gmail.com</u></string>
+    <string name="title_activity_photo">PhotoActivity</string>
 </resources>

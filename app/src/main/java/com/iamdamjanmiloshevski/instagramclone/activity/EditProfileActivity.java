@@ -201,10 +201,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         int id = v.getId();
         switch (id) {
             case R.id.iv_exit:
-//                Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
-//                startActivity(intent);
                 onBackPressed();
-                //finish();
                 break;
             case R.id.iv_confirm:
                 saveData();
@@ -234,7 +231,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void getPhoto() {
         Intent iPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(iPhoto, REQUEST_CODE_PHOTO);
+        startActivityForResult(Intent.createChooser(iPhoto, "Select Image"), REQUEST_CODE_PHOTO);
     }
 
     @Override
