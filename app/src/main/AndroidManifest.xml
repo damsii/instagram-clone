@@ -76,6 +76,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.AboutActivity"
+            android:configChanges="locale|orientation"
             android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -89,6 +90,10 @@
             android:label="@string/title_activity_edit_info"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.LanguageActivity"
+            android:label="@string/title_activity_language"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

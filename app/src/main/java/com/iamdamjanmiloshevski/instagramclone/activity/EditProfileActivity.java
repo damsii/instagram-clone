@@ -31,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
-import com.iamdamjanmiloshevski.instagramclone.utility.Constants;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -42,6 +41,7 @@ import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -142,6 +142,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     public void onBackPressed() {
         super.onBackPressed();
     }
+
     private void initUI() {
         mProfilePhoto = findViewById(R.id.iv_profile_picture);
         mChangePhoto = findViewById(R.id.tv_change_photo);
@@ -155,8 +156,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         mEditProfileView = findViewById(R.id.edit_profile_view);
         mProgressView = findViewById(R.id.progress_view);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(EditProfileActivity.this,
-                android.R.layout.simple_spinner_item, Constants.gender);
+                android.R.layout.simple_spinner_item, getGender());
         mGender.setAdapter(adapter);
+    }
+
+    private List<String> getGender() {
+        List<String> gender = new ArrayList<>();
+        gender.add(getResources().getString(R.string.sex1));
+        gender.add(getResources().getString(R.string.sex2));
+        gender.add(getResources().getString(R.string.sex3));
+
+        return gender;
     }
 
     /**

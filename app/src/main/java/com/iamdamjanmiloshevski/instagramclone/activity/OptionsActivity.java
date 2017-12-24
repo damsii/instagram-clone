@@ -57,6 +57,8 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(intent1);
                 break;
             case R.id.tv_language:
+                Intent iOptions = new Intent(OptionsActivity.this, LanguageActivity.class);
+                startActivity(iOptions);
                 break;
             case R.id.tv_about:
                 Intent intent2 = new Intent(OptionsActivity.this, AboutActivity.class);

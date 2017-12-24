@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         pager.setCurrentItem(tab.getPosition());
     }
 
+
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
         tab.setIcon(Constants.tabIconsNormal[tab.getPosition()]);

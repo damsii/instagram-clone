@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
 import com.iamdamjanmiloshevski.instagramclone.activity.EditProfileActivity;
+import com.iamdamjanmiloshevski.instagramclone.activity.PhotoActivity;
 import com.iamdamjanmiloshevski.instagramclone.adapter.GridImagesAdapter;
 import com.iamdamjanmiloshevski.instagramclone.adapter.UserAdapter;
 import com.parse.FindCallback;
@@ -85,6 +87,16 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), EditProfileActivity.class);
                 startActivity(intent);
+            }
+        });
+        mImages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent iPhoto = new Intent(getContext(), PhotoActivity.class);
+                ParseObject image = (ParseObject) parent.getAdapter().getItem(position);
+                iPhoto.putExtra("username", ParseUser.getCurrentUser().getUsername());
+                iPhoto.putExtra("imageId", image.getObjectId());
+                startActivity(iPhoto);
             }
         });
     }

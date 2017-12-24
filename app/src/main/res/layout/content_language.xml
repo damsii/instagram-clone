@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.iamdamjanmiloshevski.instagramclone.activity.LanguageActivity"
+    tools:showIn="@layout/activity_language">
+
+
+    <TextView
+        android:id="@+id/tv_english"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:onClick="changeLanguage"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="English (United States)"
+        android:textColor="#000"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tv_english"
+        android:background="#000" />
+
+    <TextView
+        android:id="@+id/tv_macedonian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:onClick="changeLanguage"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="Macedonian (Македонски) (Macedonia, Republic of)"
+        android:textColor="#000"
+        android:textSize="18sp" />
+
+</RelativeLayout>

@@ -23,9 +23,4 @@ public class Constants {
             R.drawable.ic_add,
             R.drawable.ic_profile
     };
-    public static String[] gender = {
-            "Not Specified",
-            "Male",
-            "Female"
-    };
 }

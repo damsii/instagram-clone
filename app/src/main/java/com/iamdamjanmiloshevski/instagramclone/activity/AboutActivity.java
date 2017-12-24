@@ -2,6 +2,7 @@ package com.iamdamjanmiloshevski.instagramclone.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
 import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
+
+import java.util.List;
 
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = AboutActivity.class.getSimpleName();
@@ -72,6 +75,69 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 Utility.sendEmail(this, getResources().getString(R.string.developer_email),
                         getResources().getString(R.string.subject_comments));
                 break;
+            case R.id.fb:
+                sendFbMessage();
+                break;
+            case R.id.instagram:
+                openInstagram();
+                break;
+            case R.id.linkedIn:
+                openLinkedIn();
+                break;
+        }
+    }
+
+    private void openLinkedIn() {
+        Intent linkedinIntent = new Intent(Intent.ACTION_SEND);
+        linkedinIntent.setType("text/plain");
+        linkedinIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.content_share));
+
+        boolean linkedinAppFound = false;
+        List<ResolveInfo> matches2 = getPackageManager()
+                .queryIntentActivities(linkedinIntent, 0);
+
+        for (ResolveInfo info : matches2) {
+            if (info.activityInfo.packageName.toLowerCase().startsWith(
+                    "com.linkedin")) {
+                linkedinIntent.setPackage(info.activityInfo.packageName);
+                linkedinAppFound = true;
+                break;
+            }
+        }
+
+        if (linkedinAppFound) {
+            startActivity(linkedinIntent);
+        } else {
+            Toast.makeText(AboutActivity.this, "LinkedIn app not Insatlled in your mobile", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openInstagram() {
+        Uri uri = Uri.parse("http://instagram.com/_u/iamdamjanmiloshevski");
+        Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+        likeIng.setPackage("com.instagram.android");
+
+        try {
+            startActivity(likeIng);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://instagram.com/iamdamjanmiloshevski")));
+        }
+    }
+
+    private void sendFbMessage() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent
+                .putExtra(Intent.EXTRA_TEXT,
+                        getResources().getString(R.string.message));
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage("com.facebook.orca");
+        try {
+            startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(AboutActivity.this, "Please Install Facebook Messenger", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -102,7 +168,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         String smsNumber = "38978388643"; // E164 format without '+' sign
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.setType("text/plain");
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hello. I wanted to say hi, I like your app.");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.message));
         sendIntent.putExtra("jid", smsNumber + "@s.whatsapp.net"); //phone number without "+" prefix
         sendIntent.setPackage("com.whatsapp");
         if (sendIntent.resolveActivity(this.getPackageManager()) == null) {

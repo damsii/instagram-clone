@@ -75,4 +75,14 @@ on your Instagram Clone app</string>
     <string name="email"><u>d.miloshevski@gmail.com</u></string>
     <string name="title_activity_photo">PhotoActivity</string>
     <string name="title_activity_edit_info">EditInfoActivity</string>
+    <string name="message">Hello. I wanted to say hi, I like your app.</string>
+    <string name="sex1">Not Specified</string>
+    <string name="sex2">Male</string>
+    <string name="sex3">Female</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="register">Register</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="title_activity_language">LanguageActivity</string>
 </resources>
