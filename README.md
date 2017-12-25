@@ -1,5 +1,5 @@
-# Instagram Clone 
-----------------------------------------------------------------
+# Instagram Clone #
+
 ### Information: ###
 **Developer:** Damjan Miloshevski
 
