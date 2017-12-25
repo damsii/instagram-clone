@@ -1,5 +1,5 @@
-# Instagram Clone 
-----------------------------------------------------------------
+# Instagram Clone #
+
 ### Information: ###
 **Developer:** Damjan Miloshevski
 
@@ -24,7 +24,7 @@ APK: Download APK from [ here ](https://example.com)
 - via direct messages on my social media accounts
    - [ Facebook ](https://www.facebook.com/damjan.miloshevski)
    - [ Instagram ](https://www.instagram.com/iamdamjanmiloshevski)
-   - [ LinkedIn ](https://www.linkedin.com/damjanmiloshevski)
+   - [ LinkedIn ](https://www.linkedin.com/in/damjanmiloshevski/)
 - via instant messaging on my mobile number +389 78 388 643
     - WhatsApp
     - Viber
@@ -40,8 +40,9 @@ but you'll not be notified about the changes, so if you wish to have the latest 
 often._
 
 #### Important note ####
-- Please feel free to use this clone app as template for your own apps or as a reference for some solution in your apps if you see that 
-here it's solved and you've encountered it
+- Please be advised that this software is not tested by a professional QA team or expert so it may contain bugs and it might 
+be unstable at some points, but as I did some deep tests during development, the APK shared here should be stable enough not to
+crash, although it may do due to some reason. If this happens please send me a report and a screenshot where it crashed on my email address as specified above.
 
 
 
