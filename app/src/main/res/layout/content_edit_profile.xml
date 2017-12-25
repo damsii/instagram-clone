@@ -48,7 +48,7 @@
                 android:layout_below="@id/iv_profile_picture"
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
-                android:text="Change photo"
+                android:text="@string/change_photo"
                 android:textColor="#7ec0ee"
                 android:textSize="20sp" />
 
@@ -64,7 +64,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textColor="#2f4f4f" />
 
                 <android.support.design.widget.TextInputLayout
@@ -91,7 +91,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Username"
+                    android:text="@string/username"
                     android:textColor="#2f4f4f" />
 
                 <android.support.design.widget.TextInputLayout
@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Web"
+                    android:text="@string/web"
                     android:textColor="#2f4f4f" />
                 />
                 <EditText
@@ -141,7 +141,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Bio"
+                    android:text="@string/bio"
                     android:textColor="#2f4f4f" />
                 />
 
@@ -166,7 +166,7 @@
                 android:layout_below="@id/divider"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:text="Private Information"
+                android:text="@string/private_information"
                 android:textColor="#000"
                 android:textStyle="bold" />
 
@@ -182,7 +182,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="E-mail Address"
+                    android:text="@string/e_mail_address"
                     android:textColor="#2f4f4f" />
                 />
 
@@ -205,7 +205,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Phone number"
+                    android:text="@string/phone_number"
                     android:textColor="#2f4f4f" />
                 />
 
@@ -228,7 +228,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Gender"
+                    android:text="@string/gender"
                     android:textColor="#2f4f4f" />
                 />
 

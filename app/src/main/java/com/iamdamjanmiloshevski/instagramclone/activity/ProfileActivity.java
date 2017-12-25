@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.iamdamjanmiloshevski.instagramclone.R;
 import com.iamdamjanmiloshevski.instagramclone.adapter.GridImagesAdapter;
 import com.iamdamjanmiloshevski.instagramclone.adapter.UserAdapter;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -39,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView mGrid, mList;
     private Intent intent;
     private boolean imageView = true;
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,10 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         mProfileImage = findViewById(R.id.iv_profile_picture);
         mFullName = findViewById(R.id.tv_full_name);
         mAboutMe = findViewById(R.id.tv_about_me);

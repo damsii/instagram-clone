@@ -15,6 +15,7 @@
     <application
         android:name=".application.InstagramCloneApplication"
         android:allowBackup="true"
+        android:configChanges="locale"
         android:icon="@mipmap/ic_app_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_app_logo"
@@ -27,6 +28,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.LoginActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -41,16 +43,19 @@
         </activity>
         <activity
             android:name=".activity.SignUpActivity"
+            android:configChanges="locale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.EditProfileActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_edit_profile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.EditEmailActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_edit_email"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -61,16 +66,19 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ProfileActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_profile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.OptionsActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_options"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ChangePasswordActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_change_password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -82,18 +90,21 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.PhotoActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_photo"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.EditInfoActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_edit_info"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LanguageActivity"
+            android:configChanges="locale"
             android:label="@string/title_activity_language"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

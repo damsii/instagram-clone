@@ -18,7 +18,7 @@
         android:onClick="changeLanguage"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="English (United States)"
+        android:text="@string/english_united_states"
         android:textColor="#000"
         android:textSize="18sp" />
 
@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/tv_english"
+        android:layout_marginTop="10dp"
         android:background="#000" />
 
     <TextView
@@ -39,7 +40,7 @@
         android:onClick="changeLanguage"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="Macedonian (Македонски) (Macedonia, Republic of)"
+        android:text="@string/macedonian_macedonia_republic_of"
         android:textColor="#000"
         android:textSize="18sp" />
 

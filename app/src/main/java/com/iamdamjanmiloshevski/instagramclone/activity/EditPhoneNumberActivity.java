@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -21,6 +23,10 @@ public class EditPhoneNumberActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_phone_number);
+        SessionManagement session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");

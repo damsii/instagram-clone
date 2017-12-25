@@ -10,8 +10,8 @@ package com.iamdamjanmiloshevski.instagramclone.utility;
  */
 
 public enum Lang {
-    MK("mk_MK"),
-    EN("en_US");
+    MK("mk"),
+    EN("en");
 
     private String language;
 

@@ -33,7 +33,7 @@
         android:layout_below="@id/phone_number"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
-        android:text="You'll not receive SMS updates from Instagram, because this is a clone &amp; it's not related to Instagram at any case"
+        android:text="@string/you_ll_not_receive_sms_updates_from_instagram_because_this_is_a_clone_amp_it_s_not_related_to_instagram_at_any_case"
         android:textColor="#d3d3d3" />
 
 </RelativeLayout>

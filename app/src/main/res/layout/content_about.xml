@@ -208,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mobile"
                 android:layout_marginTop="10dp"
-                android:text="Privacy Policy:"
+                android:text="@string/privacy_policy"
                 android:textAllCaps="true"
                 android:textColor="#000"
                 android:textSize="18sp"
@@ -238,8 +238,8 @@
                 android:id="@+id/terms_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/terms_use"
-                android:layout_marginTop="5dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/terms_use"
                 android:text="@string/terms_text" />
 
             <TextView

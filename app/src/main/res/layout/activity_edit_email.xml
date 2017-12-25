@@ -37,7 +37,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
                     android:layout_toEndOf="@id/iv_exit_email"
-                    android:text="Change Email"
+                    android:text="@string/change_email"
                     android:textColor="#000"
                     android:textSize="18sp" />
 

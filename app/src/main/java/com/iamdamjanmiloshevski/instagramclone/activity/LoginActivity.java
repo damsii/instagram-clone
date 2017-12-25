@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
 import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -39,12 +40,17 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         // Set up the login form.
         Toast.makeText(LoginActivity.this, "Please login to continue", Toast.LENGTH_SHORT)
                 .show();
@@ -144,6 +150,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                             if (!usernames.contains(email)) {
                                 usernames.add(email);
                             }
+                            showProgress(false);
                             startActivity(intent);
                             finish();
                         } else {
@@ -158,13 +165,11 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return true;
+        return email.matches("[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\_\\.]+\\.[a-zA-Z0-9]{3}");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 6;
     }
 
     /**

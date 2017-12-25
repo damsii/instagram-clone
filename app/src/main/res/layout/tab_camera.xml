@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image_progress"
-            android:text="Posting..."
+            android:text="@string/posting"
             android:textColor="#2f4f4f"
             android:textSize="14sp" />
     </RelativeLayout>
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:gravity="center"
-                android:text="Tap to add photo" />
+                android:text="@string/tap_to_add_photo" />
 
             <ImageView
                 android:id="@+id/iv_image"
@@ -67,6 +67,6 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:gravity="top"
-            android:hint="Write a caption..." />
+            android:hint="@string/write_a_caption" />
     </RelativeLayout>
 </RelativeLayout>

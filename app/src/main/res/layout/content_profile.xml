@@ -27,7 +27,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:background="#0099CC"
-        android:text="Message"
+        android:text="@string/message1"
         android:textAllCaps="false"
         android:textColor="#fff" />
 
@@ -44,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Damjan Miloshevski"
             android:textColor="#000"
             android:textStyle="bold" />
 
@@ -55,8 +54,7 @@
             android:layout_below="@id/tv_full_name"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:text="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati." />
+            android:layout_marginTop="5dp" />
     </RelativeLayout>
 
     <LinearLayout

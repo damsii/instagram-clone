@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -28,6 +30,7 @@ public class EditInfoActivity extends AppCompatActivity implements View.OnClickL
     private TextView username;
     private ImageView image, more;
     private EditText description;
+    private SessionManagement session;
 
 
     @Override
@@ -40,6 +43,10 @@ public class EditInfoActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initUI() {
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView mExit = toolbar.findViewById(R.id.iv_exit);

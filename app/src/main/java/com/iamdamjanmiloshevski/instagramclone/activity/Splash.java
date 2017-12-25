@@ -6,17 +6,23 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.ParseUser;
 
 public class Splash extends AppCompatActivity {
     private ParseUser user;
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
-
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         user = ParseUser.getCurrentUser();
         //ParseAnalytics.trackAppOpenedInBackground(getIntent());
         new Handler().postDelayed(new Runnable() {

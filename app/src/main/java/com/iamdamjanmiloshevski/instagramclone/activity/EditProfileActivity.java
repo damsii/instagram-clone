@@ -31,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -57,6 +59,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private RelativeLayout mProgressView;
     private Toolbar toolbar;
     private String gender = "";
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +147,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initUI() {
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         mProfilePhoto = findViewById(R.id.iv_profile_picture);
         mChangePhoto = findViewById(R.id.tv_change_photo);
         mFullName = findViewById(R.id.et_full_name);

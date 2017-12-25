@@ -13,9 +13,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.ParseUser;
 
 public class OptionsActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,10 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         TextView mEditProfile = findViewById(R.id.tv_edit_profile);
         TextView mChangePassword = findViewById(R.id.tv_change_password);
         TextView mLanguage = findViewById(R.id.tv_language);

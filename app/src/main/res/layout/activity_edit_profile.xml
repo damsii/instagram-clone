@@ -38,7 +38,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
                     android:layout_toEndOf="@id/iv_exit"
-                    android:text="Edit Profile"
+                    android:text="@string/edit_profile"
                     android:textColor="#000"
                     android:textSize="18sp" />
 

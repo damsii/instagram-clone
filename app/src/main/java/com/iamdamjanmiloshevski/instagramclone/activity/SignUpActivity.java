@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
 import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -30,12 +31,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private EditText mPasswordView;
     private View mProgressView;
     private View mRegisterFormView;
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         getSupportActionBar().hide();
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         // Set up the login form.
         mUsername = findViewById(R.id.email);
 
@@ -122,6 +128,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
+                            showProgress(false);
                             Log.i(TAG, "Registration successful");
                             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                             Toast.makeText(SignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
@@ -139,13 +146,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return true;
+        return email.matches("[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\_\\.]+\\.[a-zA-Z0-9]{3}");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 6;
     }
 
     /**
@@ -185,12 +190,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Intent gotoLogin = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(gotoLogin);
                 finish();
+                break;
             case R.id.email_sign_in_button:
                 attemptRegistration();
+                break;
             case R.id.relativeLayout:
                 Utility.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+                break;
             default:
                 Utility.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+                break;
         }
     }
 

@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -26,6 +28,7 @@ import com.parse.SaveCallback;
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = ChangePasswordActivity.class.getSimpleName();
     private EditText mNewPass, mVerifyPass, mCurrentPass;
+    private SessionManagement session;
 
 
     @Override
@@ -84,6 +87,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     }
 
     private void initUI() {
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mCurrentPass = findViewById(R.id.et_current_pass);
@@ -110,10 +117,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.et_current_pass:
-                showToast("Passwords must be at least 6 characters");
+                showToast(getString(R.string.password_error));
                 break;
             case R.id.et_verify_pass:
-                showToast("Passwords must be at least 6 characters");
+                showToast(getString(R.string.password_error));
                 break;
             case R.id.iv_exit:
                 onBackPressed();
@@ -142,22 +149,22 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         final String password = mNewPass.getText().toString();
         String verifiedPass = mVerifyPass.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            showToast("Passwords don't match!");
+            showToast(getString(R.string.password_match));
             mNewPass.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_lock_red, 0, 0, 0);
             cancel = true;
         }
         if (TextUtils.isEmpty(verifiedPass)) {
-            showToast("Passwords don't match!");
+            showToast(getString(R.string.password_match));
             cancel = true;
             mVerifyPass.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_lock_red, 0, 0, 0);
         }
         if (!verifiedPass.equalsIgnoreCase(password)) {
             cancel = true;
-            showToast("Passwords don't match!");
+            showToast(getString(R.string.password_match));
             mVerifyPass.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_lock_red, 0, 0, 0);
         } else if (!password.equals(verifiedPass)) {
             cancel = true;
-            showToast("Passwords don't match!");
+            showToast(getString(R.string.password_match));
             mNewPass.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_lock_red, 0, 0, 0);
         }
         if (!cancel) {

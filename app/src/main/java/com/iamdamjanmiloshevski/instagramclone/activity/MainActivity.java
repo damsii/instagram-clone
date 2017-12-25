@@ -15,6 +15,8 @@ import com.iamdamjanmiloshevski.instagramclone.fragment.HomeFragment;
 import com.iamdamjanmiloshevski.instagramclone.fragment.PhotoFragment;
 import com.iamdamjanmiloshevski.instagramclone.fragment.ProfileFragment;
 import com.iamdamjanmiloshevski.instagramclone.utility.Constants;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.iamdamjanmiloshevski.instagramclone.view.InstagramViewPager;
 import com.parse.ParseAnalytics;
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public static Toolbar toolbar;
     public static ImageView logo;
     private ImageView more;
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         logo = toolbar.findViewById(R.id.tv_logo);
         pager = findViewById(R.id.pages);
         more = toolbar.findViewById(R.id.iv_more);

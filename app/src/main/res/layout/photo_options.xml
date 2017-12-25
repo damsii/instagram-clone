@@ -12,7 +12,7 @@
         android:layout_marginStart="10dp"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="Edit"
+        android:text="@string/edit"
         android:textColor="#000"
         android:textSize="18sp" />
 
@@ -23,7 +23,7 @@
         android:layout_marginStart="10dp"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="Delete"
+        android:text="@string/delete"
         android:textColor="#000"
         android:textSize="18sp" />
 

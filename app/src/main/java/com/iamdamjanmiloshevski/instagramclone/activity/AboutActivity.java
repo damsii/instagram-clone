@@ -15,12 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
 import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 
 import java.util.List;
 
 public class AboutActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = AboutActivity.class.getSimpleName();
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,10 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initUI() {
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

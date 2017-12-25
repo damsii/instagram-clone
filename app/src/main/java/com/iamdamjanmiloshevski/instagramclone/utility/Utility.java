@@ -3,6 +3,7 @@ package com.iamdamjanmiloshevski.instagramclone.utility;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -10,6 +11,8 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import java.util.Locale;
 
 /**
  * --------------------------------------------
@@ -81,5 +84,14 @@ public class Utility {
             context.startActivity(Intent.createChooser(intent, "Send Email using..."));
         }
         context.startActivity(Intent.createChooser(intent, "Send Email using..."));
+    }
+
+    public static void setApplicationLanguage(String lang, Context context) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config,
+                context.getResources().getDisplayMetrics());
     }
 }

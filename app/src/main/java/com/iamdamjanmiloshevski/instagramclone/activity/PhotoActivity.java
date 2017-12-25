@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
@@ -33,6 +35,7 @@ public class PhotoActivity extends AppCompatActivity {
     private TextView username;
     private ImageView image, more;
     private TextView description;
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,10 @@ public class PhotoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         more = toolbar.findViewById(R.id.iv_more);
         if (ParseUser.getCurrentUser().getUsername().equals(getIntent().getStringExtra("username"))) {
             more.setVisibility(View.VISIBLE);

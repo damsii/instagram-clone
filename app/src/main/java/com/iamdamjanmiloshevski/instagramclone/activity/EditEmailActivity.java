@@ -1,6 +1,5 @@
 package com.iamdamjanmiloshevski.instagramclone.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
+import com.iamdamjanmiloshevski.instagramclone.utility.SessionManagement;
+import com.iamdamjanmiloshevski.instagramclone.utility.Utility;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -18,6 +19,7 @@ import com.parse.SaveCallback;
 public class EditEmailActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = EditEmailActivity.class.getSimpleName();
     private EditText mEmail;
+    private SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,10 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initUI() {
+        session = new SessionManagement(this);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageView mExit = toolbar.findViewById(R.id.iv_exit_email);
@@ -48,11 +54,11 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
         boolean cancel = false;
         String email = mEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            mEmail.setError("Email cannot be empty!");
+            mEmail.setError(getString(R.string.empty_email));
             cancel = true;
         }
         if (!isValidEmail(email)) {
-            mEmail.setError("Please enter a valid email!");
+            mEmail.setError(getString(R.string.valid_email));
             cancel = true;
         }
         if (!cancel) {
@@ -83,9 +89,13 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
                 updateEmail();
                 break;
             case R.id.iv_exit_email:
-                Intent intent = new Intent(EditEmailActivity.this, EditProfileActivity.class);
-                startActivity(intent);
+                onBackPressed();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
