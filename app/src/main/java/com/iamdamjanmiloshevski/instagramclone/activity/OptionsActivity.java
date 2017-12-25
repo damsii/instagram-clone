@@ -96,8 +96,8 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         } else {
             builder = new AlertDialog.Builder(this);
         }
-        builder.setTitle("Log out")
-                .setMessage("Are you sure that you want to log out?")
+        builder.setTitle(R.string.logout)
+                .setMessage(R.string.logout_msg)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ParseUser.logOut();

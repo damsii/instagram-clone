@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
     private View mProgressView;
     private View mLoginFormView;
     private SessionManagement session;
+    private RelativeLayout relative;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +70,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 return false;
             }
         });
-
+        relative = findViewById(R.id.relative);
         TextView mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(this);
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.progress_view);
-        View mRegisterView = findViewById(R.id.register);
+        TextView mRegisterView = findViewById(R.id.register);
         mRegisterView.setOnClickListener(this);
         View relativeLayout = findViewById(R.id.relativeLayout);
         relativeLayout.setOnClickListener(this);
@@ -123,12 +125,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mUsername;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mUsername.setError(getString(R.string.error_invalid_email));
-            focusView = mUsername;
-            cancel = true;
         }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -190,7 +187,14 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             }
         });
-
+        relative.setVisibility(show ? View.VISIBLE : View.GONE);
+        relative.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                relative.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         mProgressView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
@@ -199,6 +203,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+
     }
 
     @Override

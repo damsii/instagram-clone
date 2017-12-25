@@ -16,7 +16,7 @@
     <string name="permission_rationale" translatable="false">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="underlined"><u><b>here</b></u></string>
+    <string name="underlined"><u><b>  here</b></u></string>
     <string name="title_activity_sign_up" translatable="false">SignUpActivity</string>
     <string name="title_activity_edit_profile" translatable="false">EditProfileActivity</string>
     <string name="title_activity_edit_email" translatable="false">EditEmailActivity</string>
@@ -76,16 +76,16 @@ on your Instagram Clone app</string>
     <string name="sex2">Male</string>
     <string name="sex3">Female</string>
     <string name="dont_have_an_account">Don\'t have an account?</string>
-    <string name="sign_up">Sign up</string>
+    <string name="sign_up"> <u><b>Sign up</b></u> </string>
     <string name="register">Register</string>
     <string name="already_have_an_account">Already have an account?</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in"><u><b>Sign in</b></u></string>
     <string name="title_activity_language" translatable="false">LanguageActivity</string>
     <string name="change_password">Change password</string>
     <string name="change_email">Change Email</string>
     <string name="edit_info">Edit Info</string>
     <string name="signing_in">Signing in...</string>
-    <string name="login">Login</string>
+    <string name="login">Log in</string>
     <string name="options">Options</string>
     <string name="photo">Photo</string>
     <string name="registering">Registering...</string>
@@ -107,7 +107,7 @@ on your Instagram Clone app</string>
     <string name="phone_number">Phone number</string>
     <string name="gender">Gender</string>
     <string name="english_united_states" translatable="false">English (United States)</string>
-    <string name="macedonian_macedonia_republic_of" translatable="false">Македонски</string>
+    <string name="macedonian_macedonia_republic_of" translatable="false">Македонски (Македонија)</string>
     <string name="account">Account</string>
     <string name="change_password1">Change Password</string>
     <string name="settings">Settings</string>
@@ -129,4 +129,6 @@ on your Instagram Clone app</string>
     <string name="password_error">Passwords must be at least 6 characters</string>
     <string name="password_match">Passwords don\'t match!</string>
     <string name="privacy_policy">Privacy Policy:</string>
+    <string name="logout">Log out</string>
+    <string name="logout_msg">Are you sure that you want to log out?</string>
 </resources>

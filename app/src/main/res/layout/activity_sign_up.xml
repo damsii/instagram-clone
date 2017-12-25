@@ -3,7 +3,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sf"
+    android:background="#fff"
     android:orientation="vertical"
     tools:context="com.iamdamjanmiloshevski.instagramclone.activity.LoginActivity">
 
@@ -12,15 +12,17 @@
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/relativeLayout2"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logo_large" />
+        android:layout_marginBottom="25dp"
+        android:src="@drawable/logo" />
     <!-- Login progress -->
     <RelativeLayout
         android:id="@+id/progress_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
+        android:background="#fff"
         android:visibility="gone">
 
         <ProgressBar
@@ -28,18 +30,21 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginBottom="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/login_progress"
+            android:layout_centerHorizontal="true"
             android:text="@string/registering"
-            android:textColor="#fff"
+            android:textColor="#d3d3d3"
             android:textSize="14sp" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -61,7 +66,11 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="10dp"
+                    android:background="#e3e7ea"
+                    android:textColorHint="#000">
 
                     <EditText
                         android:id="@+id/email"
@@ -74,13 +83,18 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:textColorHint="#fff" />
+                        android:textColorHint="#000" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#e3e7ea"
+                    android:textColorHint="#000">
 
                     <EditText
                         android:id="@+id/password"
@@ -95,75 +109,65 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:textColorHint="#fff" />
+                        android:textColorHint="#000" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/register_button"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="16dp"
+                    android:background="#0099CC"
                     android:gravity="center"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
                     android:text="@string/register"
                     android:textAllCaps="false"
-                    android:textColor="#2f4f4f"
+                    android:textColor="#fff"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal">
-
-                    <TextView
-                        android:id="@+id/have_acc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/already_have_an_account"
-                        android:textColor="#fff" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/have_acc"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/t1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sign_in"
-                            android:textColor="#fff" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/t1"
-                            android:text="@string/underlined"
-                            android:textColor="#ccac00"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </RelativeLayout>
 
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
-        android:gravity="center"
-        android:text="@string/copyrights"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#bbc3cc" />
+
+        <TextView
+            android:id="@+id/haveaccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/already_have_an_account" />
+
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@id/haveaccount"
+            android:paddingBottom="10dp"
+            android:paddingLeft="3dp"
+            android:paddingTop="10dp"
+            android:text="@string/sign_in" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private View mProgressView;
     private View mRegisterFormView;
     private SessionManagement session;
+    private RelativeLayout relative;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +59,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        TextView mRegisterButton = findViewById(R.id.email_sign_in_button);
+        TextView mRegisterButton = findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(this);
-
-        mRegisterFormView = findViewById(R.id.register_form);
+        relative = findViewById(R.id.relative);
+        mRegisterFormView = findViewById(R.id.login);
         mProgressView = findViewById(R.id.progress_view);
         View mLoginView = findViewById(R.id.login);
         mLoginView.setOnClickListener(this);
@@ -171,7 +173,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             }
         });
-
+        relative.setVisibility(show ? View.VISIBLE : View.GONE);
+        relative.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                relative.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         mProgressView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
@@ -180,6 +189,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+
     }
 
     @Override
@@ -191,7 +201,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(gotoLogin);
                 finish();
                 break;
-            case R.id.email_sign_in_button:
+            case R.id.register_button:
                 attemptRegistration();
                 break;
             case R.id.relativeLayout:

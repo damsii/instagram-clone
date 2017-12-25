@@ -37,6 +37,7 @@ import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -60,6 +61,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private Toolbar toolbar;
     private String gender = "";
     private SessionManagement session;
+    private String oldUsername = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +111,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         String fullName = user.getString("name") + " " + user.getString("surname");
                         mFullName.setText(fullName);
                         mUsername.setText(user.getUsername());
+                        oldUsername = user.getUsername();
                         mWeb.setText(user.getString("web"));
                         mBio.setText(user.getString("about_me"));
                         mEmail.setText(user.getEmail());
@@ -294,7 +297,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void saveData() {
         String fullName = mFullName.getText().toString();
-        String username = mUsername.getText().toString();
+        final String username = mUsername.getText().toString();
         String website = mWeb.getText().toString();
         String bio = mBio.getText().toString();
         Drawable drawable = mProfilePhoto.getDrawable();
@@ -304,46 +307,69 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         if (TextUtils.isEmpty(username)) {
             mUsername.setError("Username cannot be empty!");
         } else {
-
-            String[] parts = fullName.split(" ");
-            String name = parts[0];
-            String surname = parts[1];
-            ParseUser user = ParseUser.getCurrentUser();
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            Bitmap image = bitmapDrawable.getBitmap();
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream.toByteArray();
-            ParseFile file = new ParseFile(generateImageName(), byteArray);
-            user.put("name", name);
-            user.put("surname", surname);
-            user.put("username", username);
-            user.put("about_me", bio);
-            user.put("web", website);
-            user.put("profile_image", file);
-            switch (gender) {
-                case "Not Specified":
-                    user.put("gender", 2);
-                case "Male":
-                    user.put("gender", 0);
-                case "Female":
-                    user.put("gender", 1);
-            }
-            user.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(EditProfileActivity.this, "Profile edited successfully",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.e(TAG, e.getMessage());
-                        switch (e.getMessage()) {
-                            case "Account already exists for this username.":
-                                mUsername.setError("Username already taken");
+            try {
+                String[] parts = fullName.split(" ");
+                String name = parts[0];
+                String surname = parts[1];
+                ParseUser user = ParseUser.getCurrentUser();
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+                Bitmap image = bitmapDrawable.getBitmap();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                ParseFile file = new ParseFile(generateImageName(), byteArray);
+                user.put("name", name);
+                user.put("surname", surname);
+                user.put("username", username);
+                user.put("about_me", bio);
+                user.put("web", website);
+                user.put("profile_image", file);
+                switch (gender) {
+                    case "Not Specified":
+                        user.put("gender", 2);
+                    case "Male":
+                        user.put("gender", 0);
+                    case "Female":
+                        user.put("gender", 1);
+                }
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Toast.makeText(EditProfileActivity.this, "Profile edited successfully",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.e(TAG, e.getMessage());
+                            switch (e.getMessage()) {
+                                case "Account already exists for this username.":
+                                    mUsername.setError("Username already taken");
+                            }
                         }
                     }
-                }
-            });
+                });
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Image");
+                query.whereEqualTo("username", oldUsername);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if (e == null) {
+                            if (objects.size() > 0) {
+                                for (ParseObject object : objects) {
+                                    object.put("username", username);
+                                    object.saveInBackground();
+                                }
+                            }
+                        } else {
+                            Log.e(TAG, e.getMessage());
+                        }
+                    }
+                });
+            } catch (IllegalArgumentException e) {
+                showProgress(false);
+                Log.e(TAG, e.getMessage());
+                String error = "Image too large.\nPlease select image lower than 10.48MB";
+                Toast.makeText(EditProfileActivity.this, error, Toast.LENGTH_LONG).show();
+            }
 
         }
     }

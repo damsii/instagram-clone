@@ -81,4 +81,6 @@
     <string name="disclaimer2"><b>#2</b> Оваа апликација не ја користи вистинската содржина и сервери на Instagram, има свој сервер и податоци кои се користени најчесто за демонстративни цели</string>
     <string name="disclaimer3"><b>#3</b> Било кои податоци во оваа апликација не се на никаков начин поврзани со Instagram или Facebook Inc.</string>
     <string name="disclaimer4"><b>#4</b> Оваа апликација нема да биде објавена на Google Play затоа што нејзината примарна цел не е да го замени вистинскиот Instagram</string>
+    <string name="logout_msg">Дали сте сигурни дека сакате да се одјавите?</string>
+    <string name="logout">Одјави се</string>
 </resources>

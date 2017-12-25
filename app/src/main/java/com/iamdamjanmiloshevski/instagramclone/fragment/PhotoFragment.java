@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
@@ -58,7 +59,7 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
     private static final String TAG = PhotoFragment.class.getSimpleName();
     private static final long MAX_SIZE = 10485760;
     private static final int REQUEST_CODE_PHOTO = 100;
-    private View mTap;
+    private TextView mTap;
     private EditText mDescription;
     private ImageView mPhoto;
     private int EXTERNAL_STORAGE_REQUEST_CODE = 200;
@@ -79,6 +80,8 @@ public class PhotoFragment extends BaseFragment implements View.OnClickListener 
         mPhoto = view.findViewById(R.id.iv_image);
         mDescription = view.findViewById(R.id.et_photo_description);
         mTap = view.findViewById(R.id.tv_tap);
+        String tapText = getResources().getString(R.string.tap_to_add_photo) + "\n (max 10MB)";
+        mTap.setText(tapText);
         imageView = view.findViewById(R.id.post_image);
         progressView = view.findViewById(R.id.progress_view);
         mTap.setOnClickListener(this);
