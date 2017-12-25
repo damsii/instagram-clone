@@ -151,9 +151,16 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(LoginActivity.this, "Failed to sign in. Error: " + e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
                             Log.e(TAG, "Login failed. Error: " + e.getMessage());
+                            switch (e.getMessage()) {
+                                case "Invalid username/password":
+                                    Toast.makeText(LoginActivity.this,
+                                            "Invalid username and password", Toast.LENGTH_SHORT).show();
+                                    mUsername.setError("Invalid username");
+                                    mPasswordView.setError("Invalid password");
+                                    showProgress(false);
+                                    break;
+                            }
                         }
                     }
                 });
@@ -214,12 +221,16 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 Intent gotoRegister = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(gotoRegister);
                 finish();
+                break;
             case R.id.email_sign_in_button:
                 attemptLogin();
+                break;
             case R.id.relativeLayout:
                 Utility.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+                break;
             default:
                 Utility.hideSoftKeyboard(getApplicationContext(), getCurrentFocus());
+                break;
         }
     }
 

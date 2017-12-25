@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iamdamjanmiloshevski.instagramclone.R;
@@ -40,6 +41,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private RecyclerView mUsers;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RelativeLayout progressView, feedView;
+    private TextView mNoData;
 
     @Nullable
     @Override
@@ -60,6 +62,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mUsers.setLayoutManager(layoutManager);
         progressView = view.findViewById(R.id.progress_view);
         feedView = view.findViewById(R.id.feed);
+        mNoData = view.findViewById(R.id.no_data);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -76,6 +79,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                         showProgress(false);
                         UserAdapter adapter = new UserAdapter(getContext(), objects);
                         mUsers.setAdapter(adapter);
+                    } else {
+                        mNoData.setVisibility(View.VISIBLE);
+                        mUsers.setVisibility(View.GONE);
+                        showProgress(false);
                     }
                 }
             }
@@ -110,6 +117,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         });
     }
+
     private void displayCachedUsers() {
     }
 

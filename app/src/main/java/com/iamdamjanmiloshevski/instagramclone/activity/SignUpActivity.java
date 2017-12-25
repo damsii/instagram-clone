@@ -61,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         TextView mRegisterButton = findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(this);
-        relative = findViewById(R.id.relative);
+        relative = findViewById(R.id.relativeLayout2);
         mRegisterFormView = findViewById(R.id.login);
         mProgressView = findViewById(R.id.progress_view);
         View mLoginView = findViewById(R.id.login);
@@ -103,10 +103,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
             mUsername.setError(getString(R.string.error_field_required));
             mPasswordView.setError(getString(R.string.error_field_required));
-            focusView = mUsername;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mUsername.setError(getString(R.string.error_invalid_email));
             focusView = mUsername;
             cancel = true;
         }

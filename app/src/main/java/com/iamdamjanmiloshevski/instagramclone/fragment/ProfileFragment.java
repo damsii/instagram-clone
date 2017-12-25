@@ -159,7 +159,11 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                         String fullName = user.getString("name") + " " + user.getString("surname");
                         mFullName.setText(fullName);
                         mAboutMe.setText(user.getString("about_me"));
-                        displayImage(user);
+                        if (mProfileImage.getDrawable() == null) {
+                            mProfileImage.setImageResource(R.drawable.instagram);
+                        } else {
+                            displayImage(user);
+                        }
                     }
                 }
             }
@@ -197,15 +201,19 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
     private void displayImage(ParseUser user) {
         ParseFile file = user.getParseFile("profile_image");
-        file.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] data, ParseException e) {
-                if (e == null && data != null) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    mProfileImage.setImageBitmap(bitmap);
+        if (file != null) {
+            file.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null && data != null) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        mProfileImage.setImageBitmap(bitmap);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            mProfileImage.setImageResource(R.drawable.instagram);
+        }
     }
 
     @Override

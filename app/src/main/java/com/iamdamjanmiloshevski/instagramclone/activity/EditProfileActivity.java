@@ -133,15 +133,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void displayImage(ParseUser user) {
         ParseFile file = user.getParseFile("profile_image");
-        file.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] data, ParseException e) {
-                if (e == null && data != null) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    mProfilePhoto.setImageBitmap(bitmap);
+        if (file != null) {
+            file.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null && data != null) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        mProfilePhoto.setImageBitmap(bitmap);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            mProfilePhoto.setImageResource(R.drawable.instagram);
+        }
     }
 
     @Override
