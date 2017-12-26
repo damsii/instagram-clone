@@ -7,7 +7,7 @@
 
 **Programming language:** Java & Kotlin
 
-**Server:** Parse powered by Bitnami, using EC2 Console via Amazon Web Services
+**API:** Parse powered by Bitnami, via Amazon Web Services
 
 -------------------------------------------------------------------
 APK: Download APK from [ here ](https://example.com)
@@ -39,11 +39,11 @@ APK: Download APK from [ here ](https://example.com)
 but you'll not be notified about the changes, so if you wish to have the latest version of code and APK, please check this repository 
 often._
 
-#### Important note ####
+#### Important notes ####
 - Please be advised that this software is not tested by a professional QA team or expert so it may contain bugs and it might 
 be unstable at some points, but as I did some deep tests during development, the APK shared here should be stable enough not to
 crash, although it may do due to some reason. If this happens please send me a report and a screenshot where it crashed on my email address as specified above.
-
+- This application is still under development so it will have frequent changes in the code and the APK version will be updated respectively.
 
 
 Marting Golding 
