@@ -108,7 +108,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     if (objects.size() > 0) {
                         showProgress(false);
                         ParseUser user = objects.get(0);
-                        String fullName = user.getString("name") + " " + user.getString("surname");
+                        String fullName = "";
+                        if (user.getString("name") != null && user.getString("surname") != null) {
+                            fullName = user.getString("name") + " " + user.getString("surname");
+                        }
                         mFullName.setText(fullName);
                         mUsername.setText(user.getUsername());
                         oldUsername = user.getUsername();
@@ -121,8 +124,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                         switch (gender) {
                             case 0:
                                 mGender.setSelection(1);
+                                break;
                             case 1:
                                 mGender.setSelection(2);
+                                break;
+                            case 2:
+                                mGender.setSelection(0);
+                                break;
                         }
                         displayImage(user);
                     }
@@ -330,11 +338,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 user.put("profile_image", file);
                 switch (gender) {
                     case "Not Specified":
-                        user.put("gender", 2);
+                        user.put("gender", null);
                     case "Male":
-                        user.put("gender", 0);
+                        user.put("gender", "m");
                     case "Female":
-                        user.put("gender", 1);
+                        user.put("gender", "f");
                 }
                 user.saveInBackground(new SaveCallback() {
                     @Override

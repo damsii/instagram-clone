@@ -156,7 +156,10 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                     if (objects.size() > 0) {
                         showProgress(false);
                         ParseUser user = objects.get(0);
-                        String fullName = user.getString("name") + " " + user.getString("surname");
+                        String fullName = "";
+                        if (user.getString("name") != null && user.getString("surname") != null) {
+                            fullName = user.getString("name") + " " + user.getString("surname");
+                        }
                         mFullName.setText(fullName);
                         mAboutMe.setText(user.getString("about_me"));
                         if (mProfileImage.getDrawable() == null) {

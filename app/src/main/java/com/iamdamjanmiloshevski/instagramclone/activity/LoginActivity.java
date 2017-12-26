@@ -40,9 +40,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
     private AutoCompleteTextView mUsername;
     private EditText mPasswordView;
     private View mProgressView;
-    private View mLoginFormView;
     private SessionManagement session;
-    private RelativeLayout relative;
+    private RelativeLayout loginView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +69,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 return false;
             }
         });
-        relative = findViewById(R.id.relative);
         TextView mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(this);
-
-        mLoginFormView = findViewById(R.id.login_form);
+        loginView = findViewById(R.id.loginView);
         mProgressView = findViewById(R.id.progress_view);
         TextView mRegisterView = findViewById(R.id.register);
         mRegisterView.setOnClickListener(this);
@@ -186,20 +183,20 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         // the progress spinner.
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-        relative.setVisibility(show ? View.VISIBLE : View.GONE);
-        relative.animate().setDuration(shortAnimTime).alpha(
+//        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+//        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+//                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+//            }
+//        });
+        loginView.setVisibility(show ? View.VISIBLE : View.GONE);
+        loginView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                relative.setVisibility(show ? View.VISIBLE : View.GONE);
+                loginView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);

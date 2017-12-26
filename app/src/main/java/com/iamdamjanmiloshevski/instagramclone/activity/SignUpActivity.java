@@ -33,7 +33,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private View mProgressView;
     private View mRegisterFormView;
     private SessionManagement session;
-    private RelativeLayout relative;
+    private RelativeLayout registerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +61,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         TextView mRegisterButton = findViewById(R.id.register_button);
         mRegisterButton.setOnClickListener(this);
-        relative = findViewById(R.id.relativeLayout2);
-        mRegisterFormView = findViewById(R.id.login);
+        registerView = findViewById(R.id.registerView);
         mProgressView = findViewById(R.id.progress_view);
         View mLoginView = findViewById(R.id.login);
         mLoginView.setOnClickListener(this);
@@ -76,14 +75,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
      * errors are presented and no actual login attempt is made.
      */
     private void attemptRegistration() {
-//        if (mAuthTask != null) {
-//            return;
-//        }
-
-        // Reset errors.
-
-        mUsername.setError(null);
-        mPasswordView.setError(null);
+////        if (mAuthTask != null) {
+////            return;
+////        }
+//
+//        // Reset errors.
+//
+//        mUsername.setError(null);
+//        mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mUsername.getText().toString();
@@ -122,6 +121,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 ParseUser user = new ParseUser();
                 user.setUsername(email);
                 user.setPassword(password);
+                user.put("gender", 2);//default - Not Specified
                 user.signUpInBackground(new SignUpCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -133,6 +133,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             startActivity(intent);
                             finish();
                         } else {
+                            showProgress(false);
                             Toast.makeText(SignUpActivity.this, "Registration failed. Error: " + e.getMessage(),
                                     Toast.LENGTH_SHORT).show();
                             Log.e(TAG, "Registration failed. Error: " + e.getMessage());
@@ -161,20 +162,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         // the progress spinner.
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mRegisterFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mRegisterFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-        relative.setVisibility(show ? View.VISIBLE : View.GONE);
-        relative.animate().setDuration(shortAnimTime).alpha(
+
+        registerView.setVisibility(show ? View.VISIBLE : View.GONE);
+        registerView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                relative.setVisibility(show ? View.VISIBLE : View.GONE);
+                registerView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
