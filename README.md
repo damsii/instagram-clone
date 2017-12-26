@@ -32,37 +32,7 @@ APK: Download APK from [ here ](https://example.com)
     
 #### Screenshots from the application ####
 
-![login screen](https://1drv.ms/i/s!AgdKHE0lusbyg7Qy5n0iRLzzXdueBw)
-![register screen](https://1drv.ms/i/s!AgdKHE0lusbyg7QxUYcOLpNPcZFxoQ)
-![login screen error](https://1drv.ms/i/s!AgdKHE0lusbyg7Qy5n0iRLzzXdueBw)
-
-
-![login screen suggestion](https://1drv.ms/i/s!AgdKHE0lusbyg7QcdISexk4raUobdA)
-![no feeds](https://1drv.ms/i/s!AgdKHE0lusbyg7Qv9hBNFl9mpOst7A)
-![feeds](https://1drv.ms/i/s!AgdKHE0lusbyg7QbfrXphFRbPxOANg)
-
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7Qu9kr2JBmYU9j_TQ)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QknOXVcziWtkm4cw)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QjfoSJPTpx47aYXQ)
-
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QlkfdBn8oBLibiFQ)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7Qiddkl6eo0mOBmqA)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QhKOxbCl01KP8LQw)
-
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QgS32r2BjJN8qGbQ)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QfHULJLNY0uHWNmg)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QenkUinP5DNk-wqg)
-
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7Qt0fwdAoqy0rKNqA)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7Qs951uTIEUWQS6FQ)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QmxPtNHBinBYZROw)
-
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QpTpvYbPjuD39sRg)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7Qoz3L1BlsNf9m17A)
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7Qq8l5of-ToCDnDlA)
-
-![add photo](https://1drv.ms/i/s!AgdKHE0lusbyg7QrvqHTynISyFCN7Q)
-
+Due to OneDrive's view permissions the photos cannot be uploaded here, so please follow this [link](https://1drv.ms/f/s!AgdKHE0lusbyg7Qa98KW_sHKtSuGKg) to view the screenshots.
 
 **P.S** _You can see the complete source code of the application in this repository_
 
