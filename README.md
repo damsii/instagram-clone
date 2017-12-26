@@ -12,7 +12,7 @@
 -------------------------------------------------------------------
 APK: Download APK from [here](https://1drv.ms/u/s!AgdKHE0lusbyg7QzK3xaLEpvU66KUA)
 
-Install instructions [here](https://1drv.ms/u/s!AgdKHE0lusbyg7QzK3xaLEpvU66KUA)
+Install instructions [here](https://1drv.ms/v/s!AgdKHE0lusbyg7Q0RAXU0JfU5bU2ww)
 
 ## DISCLAIMERS: ##
 1. This app is a clone of the World's most famous social app Instagram, developed and maintaned by Facebook Inc.
