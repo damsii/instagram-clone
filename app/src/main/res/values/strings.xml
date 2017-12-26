@@ -136,4 +136,5 @@ on your Instagram Clone app</string>
     <string name="error_password">Invalid password</string>
     <string name="password_required">Password is required</string>
     <string name="blank_password">Password cannot be missing or blank</string>
+    <string name="taken_username">This username is already taken!</string>
 </resources>

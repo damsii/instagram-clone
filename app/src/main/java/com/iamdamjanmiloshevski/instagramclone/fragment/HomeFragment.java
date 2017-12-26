@@ -79,6 +79,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                         showProgress(false);
                         UserAdapter adapter = new UserAdapter(getContext(), objects);
                         mUsers.setAdapter(adapter);
+                        mNoData.setVisibility(View.GONE);
+                        mUsers.setVisibility(View.VISIBLE);
                     } else {
                         mNoData.setVisibility(View.VISIBLE);
                         mUsers.setVisibility(View.GONE);

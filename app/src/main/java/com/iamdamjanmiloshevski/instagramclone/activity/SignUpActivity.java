@@ -140,6 +140,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             startActivity(intent);
                             finish();
                         } else {
+                            Log.e(TAG, "Registration failed. Error: " + e.getMessage());
                             switch (e.getMessage()) {
                                 case "Password cannot be missing or blank":
                                     mPasswordView.setError(getResources().getString(R.string.blank_password));
@@ -147,9 +148,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     mProgressView.setVisibility(View.GONE);
                                     Log.e(TAG, "Registration failed. Error: " + e.getMessage());
                                     break;
+                                case "Account already exists for this username.":
+                                    mUsername.setError(getString(R.string.taken_username));
+                                    registerView.setVisibility(View.VISIBLE);
+                                    mProgressView.setVisibility(View.GONE);
+                                    Log.e(TAG, "Registration failed. Error: " + e.getMessage());
                             }
                             //showProgress(false);
-
                         }
                     }
                 });

@@ -88,4 +88,5 @@
     <string name="error_password">Невалидна лозинка</string>
     <string name="password_required">Лозинката е задолжителна</string>
     <string name="blank_password">Лозинката не смее да биде празна или незадолжителна</string>
+    <string name="taken_username">Ова корисничко име е зафатено!</string>
 </resources>

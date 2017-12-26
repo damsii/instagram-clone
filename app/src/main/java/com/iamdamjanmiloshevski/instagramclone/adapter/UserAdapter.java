@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.List;
  */
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+    private static final String TAG = UserAdapter.class.getSimpleName();
     private Context context;
     private List<ParseObject> images;
 
@@ -61,6 +63,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 if (e == null && data != null) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                     holder.image.setImageBitmap(bitmap);
+                } else {
+                    if (e != null) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    if (data == null) {
+                        Log.e(TAG, "data is null");
+                    }
                 }
             }
         });
