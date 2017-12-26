@@ -10,7 +10,9 @@
 **API:** Parse powered by Bitnami, via Amazon Web Services
 
 -------------------------------------------------------------------
-APK: Download APK from [ here ](https://example.com)
+APK: Download APK from [here](https://1drv.ms/u/s!AgdKHE0lusbyg7QzK3xaLEpvU66KUA)
+
+Install instructions [here](https://1drv.ms/u/s!AgdKHE0lusbyg7QzK3xaLEpvU66KUA)
 
 ## DISCLAIMERS: ##
 1. This app is a clone of the World's most famous social app Instagram, developed and maintaned by Facebook Inc.
