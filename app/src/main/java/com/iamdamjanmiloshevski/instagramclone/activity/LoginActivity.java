@@ -35,30 +35,27 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity implements OnClickListener, View.OnKeyListener {
     private final String TAG = LoginActivity.class.getSimpleName();
     private ArrayList<String> usernames = new ArrayList<>();
-
     // UI references.
     private AutoCompleteTextView mUsername;
     private EditText mPasswordView;
     private View mProgressView;
     private SessionManagement session;
     private RelativeLayout loginView;
+    private TextView mEmailSignInButton;
+    private TextView mRegisterView;
+    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
-        session = new SessionManagement(this);
-        if (session.getLanguage() != null) {
-            Utility.setApplicationLanguage(session.getLanguage(), this);
-        }
+
         // Set up the login form.
         Toast.makeText(LoginActivity.this, "Please login to continue", Toast.LENGTH_SHORT)
                 .show();
-        mUsername = findViewById(R.id.email);
-        populateAutoComplete();
+        initUI();
 
-        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -69,21 +66,35 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 return false;
             }
         });
-        TextView mEmailSignInButton = findViewById(R.id.email_sign_in_button);
+        if (session.getLanguage() != null) {
+            Utility.setApplicationLanguage(session.getLanguage(), this);
+        }
+        if (session.getUsernames() != null) {
+            usernames.addAll(new ArrayList<>(session.getUsernames()));
+            populateAutoComplete();
+        }
         mEmailSignInButton.setOnClickListener(this);
-        loginView = findViewById(R.id.loginView);
-        mProgressView = findViewById(R.id.progress_view);
-        TextView mRegisterView = findViewById(R.id.register);
         mRegisterView.setOnClickListener(this);
-        View relativeLayout = findViewById(R.id.relativeLayout);
         relativeLayout.setOnClickListener(this);
     }
 
-    private void populateAutoComplete() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, usernames);
-        mUsername.setAdapter(adapter);
+    private void initUI() {
+        session = new SessionManagement(this);
+        mUsername = findViewById(R.id.email);
+        mPasswordView = findViewById(R.id.password);
+        loginView = findViewById(R.id.loginView);
+        mProgressView = findViewById(R.id.progress_view);
+        mRegisterView = findViewById(R.id.register);
+        relativeLayout = findViewById(R.id.relativeLayout);
+        mEmailSignInButton = findViewById(R.id.email_sign_in_button);
+    }
 
+    private void populateAutoComplete() {
+        if (usernames != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_dropdown_item_1line, usernames);
+            mUsername.setAdapter(adapter);
+        }
     }
 
 
@@ -123,6 +134,11 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
             focusView = mUsername;
             cancel = true;
         }
+        if (password.equals("")) {
+            mPasswordView.setError(getResources().getString(R.string.blank_password));
+            focusView = mUsername;
+            cancel = true;
+        }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -134,28 +150,39 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 Utility.hideSoftKeyboard(this, mPasswordView);
                 // Show a progress spinner, and kick off a background task to
                 // perform the user login attempt.
-                showProgress(true);
+                //showProgress(true);
+                loginView.setVisibility(View.GONE);
+                mProgressView.setVisibility(View.VISIBLE);
                 ParseUser.logInInBackground(email, password, new LogInCallback() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
                         if (e == null) {
                             Log.i(TAG, "Login successful");
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            loginView.setVisibility(View.VISIBLE);
+                            mProgressView.setVisibility(View.GONE);
                             if (!usernames.contains(email)) {
                                 usernames.add(email);
+                                session.addUsernames(usernames);
                             }
-                            showProgress(false);
                             startActivity(intent);
                             finish();
                         } else {
                             Log.e(TAG, "Login failed. Error: " + e.getMessage());
                             switch (e.getMessage()) {
-                                case "Invalid username/password":
-                                    Toast.makeText(LoginActivity.this,
-                                            "Invalid username and password", Toast.LENGTH_SHORT).show();
-                                    mUsername.setError("Invalid username");
-                                    mPasswordView.setError("Invalid password");
-                                    showProgress(false);
+                                case "Invalid username/password.":
+                                    loginView.setVisibility(View.VISIBLE);
+                                    mProgressView.setVisibility(View.GONE);
+                                    Log.e(TAG, e.getMessage());
+                                    mUsername.setError(getResources().getString(R.string.error_username));
+                                    mPasswordView.setError(getResources().getString(R.string.error_password));
+                                    //showProgress(false);
+                                    break;
+                                case "password is required.":
+                                    loginView.setVisibility(View.VISIBLE);
+                                    mProgressView.setVisibility(View.GONE);
+                                    Log.e(TAG, e.getMessage());
+                                    mPasswordView.setError(getResources().getString(R.string.password_required));
                                     break;
                             }
                         }

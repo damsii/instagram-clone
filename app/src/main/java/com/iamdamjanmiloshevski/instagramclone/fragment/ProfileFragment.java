@@ -148,13 +148,13 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.setLimit(1);
         query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
-        showProgress(true);
+        // showProgress(true);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> objects, ParseException e) {
                 if (e == null) {
                     if (objects.size() > 0) {
-                        showProgress(false);
+                        //showProgress(false);
                         ParseUser user = objects.get(0);
                         String fullName = "";
                         if (user.getString("name") != null && user.getString("surname") != null) {

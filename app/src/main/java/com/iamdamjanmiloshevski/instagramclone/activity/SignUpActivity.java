@@ -105,7 +105,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             focusView = mUsername;
             cancel = true;
         }
-
+        if (password.equals("")) {
+            mPasswordView.setError(getResources().getString(R.string.blank_password));
+            focusView = mUsername;
+            cancel = true;
+        }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -117,7 +121,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Utility.hideSoftKeyboard(this, getCurrentFocus());
                 // Show a progress spinner, and kick off a background task to
                 // perform the user login attempt.
-                showProgress(true);
+                //showProgress(true);
+                registerView.setVisibility(View.GONE);
+                mProgressView.setVisibility(View.VISIBLE);
                 ParseUser user = new ParseUser();
                 user.setUsername(email);
                 user.setPassword(password);
@@ -126,17 +132,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
-                            showProgress(false);
+                            //showProgress(false);
+                            registerView.setVisibility(View.VISIBLE);
+                            mProgressView.setVisibility(View.GONE);
                             Log.i(TAG, "Registration successful");
                             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                            Toast.makeText(SignUpActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             finish();
                         } else {
-                            showProgress(false);
-                            Toast.makeText(SignUpActivity.this, "Registration failed. Error: " + e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                            Log.e(TAG, "Registration failed. Error: " + e.getMessage());
+                            switch (e.getMessage()) {
+                                case "Password cannot be missing or blank":
+                                    mPasswordView.setError(getResources().getString(R.string.blank_password));
+                                    registerView.setVisibility(View.VISIBLE);
+                                    mProgressView.setVisibility(View.GONE);
+                                    Log.e(TAG, "Registration failed. Error: " + e.getMessage());
+                                    break;
+                            }
+                            //showProgress(false);
+
                         }
                     }
                 });
@@ -163,7 +176,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 
-        registerView.setVisibility(show ? View.VISIBLE : View.GONE);
+        registerView.setVisibility(View.VISIBLE);
         registerView.animate().setDuration(shortAnimTime).alpha(
                 show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
             @Override

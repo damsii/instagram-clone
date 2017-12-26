@@ -7,7 +7,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
-    <string name="action_register_short">Sign in</string>
+    <string name="action_register_short">Register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -132,4 +132,8 @@ on your Instagram Clone app</string>
     <string name="logout">Log out</string>
     <string name="logout_msg">Are you sure that you want to log out?</string>
     <string name="no_feeds_yet">No feeds yet! :(</string>
+    <string name="error_username">Invalid username</string>
+    <string name="error_password">Invalid password</string>
+    <string name="password_required">Password is required</string>
+    <string name="blank_password">Password cannot be missing or blank</string>
 </resources>

@@ -84,4 +84,8 @@
     <string name="logout_msg">Дали сте сигурни дека сакате да се одјавите?</string>
     <string name="logout">Одјави се</string>
     <string name="no_feeds_yet">Нема податоци :(</string>
+    <string name="error_username">Невалидно корисничко име</string>
+    <string name="error_password">Невалидна лозинка</string>
+    <string name="password_required">Лозинката е задолжителна</string>
+    <string name="blank_password">Лозинката не смее да биде празна или незадолжителна</string>
 </resources>
