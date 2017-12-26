@@ -26,7 +26,11 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_email);
         initUI();
-        getEmail();
+        try {
+            getEmail();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initUI() {
@@ -43,14 +47,15 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
         mExit.setOnClickListener(this);
     }
 
-    public void getEmail() {
+    public void getEmail() throws ParseException {
         ParseUser parseUser = ParseUser.getCurrentUser();
+        parseUser.fetch();
         String email = parseUser.getEmail();
         mEmail.setText(email);
         mEmail.setSelection(email.length());
     }
 
-    private void updateEmail() {
+    private void updateEmail() throws ParseException {
         boolean cancel = false;
         String email = mEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
@@ -63,7 +68,9 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
         }
         if (!cancel) {
             ParseUser user = ParseUser.getCurrentUser();
+            user.fetch();
             user.put("email", email);
+            user.put("emailVerified", false);
             user.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
@@ -86,7 +93,11 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
         int id = v.getId();
         switch (id) {
             case R.id.iv_confirm_email:
-                updateEmail();
+                try {
+                    updateEmail();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.iv_exit_email:
                 onBackPressed();
