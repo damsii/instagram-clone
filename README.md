@@ -44,6 +44,7 @@ often._
 be unstable at some points, but as I did some deep tests during development, the APK shared here should be stable enough not to
 crash, although it may do due to some reason. If this happens please send me a report and a screenshot where it crashed on my email address as specified above.
 - This application is still under development so it will have frequent changes in the code and the APK version will be updated respectively.
+- Offline cases are still not completed, so the app is most likely not going to work offline
 
 
 Marting Golding 
