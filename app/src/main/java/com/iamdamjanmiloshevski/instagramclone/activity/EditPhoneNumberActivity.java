@@ -3,6 +3,7 @@ package com.iamdamjanmiloshevski.instagramclone.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
@@ -17,6 +18,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class EditPhoneNumberActivity extends AppCompatActivity {
+    private static final String TAG = EditPhoneNumberActivity.class.getSimpleName();
     private EditText mPhone;
 
     @Override
@@ -61,6 +63,8 @@ public class EditPhoneNumberActivity extends AppCompatActivity {
                 public void done(ParseException e) {
                     if (e == null) {
                         finish();
+                    } else {
+                        Log.e(TAG, e.getMessage());
                     }
                 }
             });

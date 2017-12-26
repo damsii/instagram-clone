@@ -338,11 +338,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 user.put("profile_image", file);
                 switch (gender) {
                     case "Not Specified":
-                        user.put("gender", null);
+                        user.put("gender", 2);
                     case "Male":
-                        user.put("gender", "m");
+                        user.put("gender", 0);
                     case "Female":
-                        user.put("gender", "f");
+                        user.put("gender", 1);
                 }
                 user.saveInBackground(new SaveCallback() {
                     @Override
@@ -384,5 +384,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
 
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
     }
 }

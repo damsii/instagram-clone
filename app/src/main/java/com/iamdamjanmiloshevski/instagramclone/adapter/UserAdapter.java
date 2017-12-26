@@ -57,22 +57,26 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.username.setText(object.getString("username"));
         holder.description.setText(object.getString("description"));
         ParseFile file = object.getParseFile("image");
-        file.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] data, ParseException e) {
-                if (e == null && data != null) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    holder.image.setImageBitmap(bitmap);
-                } else {
-                    if (e != null) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                    if (data == null) {
-                        Log.e(TAG, "data is null");
+        if (file != null) {
+            file.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null && data != null) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        holder.image.setImageBitmap(bitmap);
+                    } else {
+                        holder.profile_picture.setImageResource(R.mipmap.ic_app_logo);
+                        if (e != null) {
+                            Log.e(TAG, e.getMessage());
+                        }
+                        if (data == null) {
+                            Log.e(TAG, "data is null");
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", object.get("username"));
         query.setLimit(1);
@@ -82,15 +86,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 if (e == null) {
                     if (objects.size() > 0) {
                         ParseFile profile_image = objects.get(0).getParseFile("profile_image");
-                        profile_image.getDataInBackground(new GetDataCallback() {
-                            @Override
-                            public void done(byte[] data, ParseException e) {
-                                if (e == null && data != null) {
-                                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                    holder.profile_picture.setImageBitmap(bitmap);
+                        if (profile_image != null) {
+                            profile_image.getDataInBackground(new GetDataCallback() {
+                                @Override
+                                public void done(byte[] data, ParseException e) {
+                                    if (e == null && data != null) {
+                                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                                        holder.profile_picture.setImageBitmap(bitmap);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        } else {
+                            holder.profile_picture.setImageResource(R.mipmap.ic_app_logo);
+                        }
+
                     }
                 }
             }

@@ -215,7 +215,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 }
             });
         } else {
-            mProfileImage.setImageResource(R.drawable.instagram);
+            mProfileImage.setImageResource(R.mipmap.ic_app_logo);
         }
     }
 

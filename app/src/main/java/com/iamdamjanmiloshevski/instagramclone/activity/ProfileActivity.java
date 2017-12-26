@@ -154,15 +154,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void displayImage(ParseUser user) {
         ParseFile file = user.getParseFile("profile_image");
-        file.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] data, ParseException e) {
-                if (e == null && data != null) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    mProfileImage.setImageBitmap(bitmap);
+        if (file != null) {
+            file.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null && data != null) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        mProfileImage.setImageBitmap(bitmap);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            mProfileImage.setImageResource(R.mipmap.ic_app_logo);
+        }
     }
 
     @Override

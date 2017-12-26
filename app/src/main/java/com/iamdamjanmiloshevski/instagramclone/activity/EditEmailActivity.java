@@ -70,13 +70,15 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
             ParseUser user = ParseUser.getCurrentUser();
             user.fetch();
             user.put("email", email);
-            user.put("emailVerified", false);
+            //user.put("emailVerified", false);
             user.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                     if (e == null) {
                         Log.i(TAG, "Success");
                         finish();
+                    } else {
+                        Log.e(TAG, e.getMessage());
                     }
                 }
             });
@@ -87,6 +89,15 @@ public class EditEmailActivity extends AppCompatActivity implements View.OnClick
         return email.matches("[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\-\\_\\.]+\\.[a-zA-Z0-9]{3}");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            getEmail();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onClick(View v) {
