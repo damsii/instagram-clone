@@ -7,7 +7,7 @@
 
 **Programming language:** Java & Kotlin
 
-**API:** Parse powered by Bitnami, via Amazon Web Services
+**API & Backend:** Parse Server powered by Bitnami, via Amazon Web Services
 
 -------------------------------------------------------------------
 APK: Download APK from [here](https://1drv.ms/u/s!AgdKHE0lusbyg7QzK3xaLEpvU66KUA)
@@ -50,5 +50,5 @@ crash, although it may do due to some reason. If this happens please send me a r
 - Offline cases are still not completed, so the app is most likely not going to work offline
 
 
-Marting Golding 
+Martin Golding 
 > Always code as if the guy ends up maintaining your code will be a violent psychopath who knows where you live
